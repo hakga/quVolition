@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="VolitionClasses">
+  <DataContextMoniker Name="/VolitionClassesDataContext" />
+  <nestedChildShapes>
+    <classShape Id="86232989-ac57-4cb1-94a7-18438e693009" absoluteBounds="1.875, 0.75, 2, 2.0704166666666666">
+      <DataClassMoniker Name="/VolitionClassesDataContext/Partitions" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4bf9d8fb-f831-4a7a-89ce-6be7b979e051" absoluteBounds="1.8899999999999997, 1.21, 1.9700000000000002, 1.5104166666666665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="78c8d89e-fb09-4f94-b9aa-97b587df774e" absoluteBounds="4.75, 2.625, 2, 1.5235416666666666">
+      <DataClassMoniker Name="/VolitionClassesDataContext/Volitions" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e80112c2-5418-496a-a231-2a2b6706b8b9" absoluteBounds="4.765, 3.085, 1.9700000000000002, 0.96354166666666674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="quVolition" Class="VolitionClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\quVolition.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="quVolitionConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Partitions" Member="Partitions">
+    <Type Name="Partitions">
+      <Column Name="Id" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL" IsReadOnly="true" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sections" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="guests" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="options" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="term" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Volitions" Member="Volitions">
+    <Type Name="Volitions">
+      <Column Name="PartitionId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GuestId" Type="System.String" DbType="NVarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="Selected" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Updated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
