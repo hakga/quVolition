@@ -64,7 +64,18 @@ var viewModel = function( partitions, members) {
 		$(tr).find('select').each( function() {
 			volitition.push( $(this).val());
 		});
-		return volitition;
+		for ( var i = 0; i < volitition.length; i++) {
+			if ( volitition[i] == null) return;	// 一つでも未入力があれば登録しない
+		}
+		$.ajax ({
+			url: 'api/Volitions/'+self.partitionId()+'/'+guestid,
+			type: 'PUT',
+			scriptCharset:'utf-8',
+			data : {Selected:volitition},
+			dataType: 'json'
+		}).done( function( json) {
+		}).fail( function() {
+		});
 	}.bind(this);
 	this.test = function( o,e) {
 		return ;
