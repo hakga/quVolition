@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スタンダードレイアウト</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/jquery.customSelect.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">
+      <a href="/">SAMPLE SITEE</a>
+    </h1>
+    <nav class="global-nav">
+      <ul>
+        <li class="nav-item active"><a href="#">HOME</a></li>
+        <li class="nav-item"><a href="#">CREATE</a></li>
+        <li class="nav-item"><a href="#">MEMBER</a></li>
+        <li class="nav-item"><a href="#">REPORT</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="wrapper clearfix">
+    <main class="main">
+      <h2 class="hidden">Review Partition</h2>
+      <article class="hot-topic clearfix" data-bind="hover:onVilition">
+      <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"><caption>
+      <thead><tr data-bind="foreach:volHead"><th data-bind="text:$data"></th></tr></thead>
+      <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">
+      <tr data-bind="attr: {'data-guestid': $data }"></tr>
+      </tbody>
+      <tfoot></tfoot>
+      </table>
+      </article>
+    </main>
+    <div class="sidemenu">
+      <h2 class="heading">Partitions</h2>
+      <ol class="ranking" data-bind="foreach:partitions">
+      <li class="ranking-item">
+          <section data-bind="click:$root.onPartition">
+            <span class="order"></span>
+            <p class="text"><span data-bind="text:$data.name"></span><br>
+            <span data-bind="text:$data.description" class="text description"></span><br>
+            <span data-bind="text:$data.sections().join(' ')" class="text description"></span>
+            </p>
+          </section>
+      </li>
+      </ol>
+      <h2 class="heading">Members</h2>
+      <ul class="documents">
+        <li>
+          <h3 class="title">Networkers</h3>
+          <ul data-bind="foreach:members">
+            <li data-bind="text:$data.name"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <footer class="footer">
+    <p class="copyright">Copyright © 2015 SAMPLE SITE</p>
+  </footer>
+<script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+<script type="text/javascript" src="js/knockout.mapping.js"></script>
+<script type="text/javascript" src="js/Models.js"></script>
+<script type="text/javascript">
+(function(){
+	initialize();
+})();
+</script>
+</body>
+</html>
