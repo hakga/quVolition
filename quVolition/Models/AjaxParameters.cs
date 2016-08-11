@@ -20,4 +20,10 @@ namespace quVolition.Models {
         public string GuestId { get; set; }
         public string[] Selected { get; set; }
     }
+    public class paramMessage {
+        public string[] toAddr { get; set; }
+        public string fromAddr { get; set; }
+        public string subject { get; set; }
+        public string body { get; set; }
+    }
 }

@@ -15,8 +15,8 @@
     </h1>
     <nav class="global-nav">
       <ul>
-        <li class="nav-item"><a href="home.html">HOME</a></li>
-        <li class="nav-item active"><a href="#">CREATE</a></li>
+        <li class="nav-item active"><a href="#">HOME</a></li>
+        <li class="nav-item"><a href="Create.html">CREATE</a></li>
         <li class="nav-item"><a href="#">MEMBER</a></li>
         <li class="nav-item"><a href="#">REPORT</a></li>
       </ul>
@@ -26,18 +26,18 @@
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
       <article class="hot-topic clearfix">
-      <form class="Partition" data-bind="with:partitions()[Idx()]">
-      <input data-bind="textInput:name" />
-      <input data-bind="textInput:description" />
-      <ul data-bind="foreach: sections"><li><button data-bind="click: $root.delSection" class="addSection">－</button><input data-bind="textInput:$data" /></li></ul>
-      <button data-bind="click: $root.addSection" class="addSection">＋</button>
-      </form>
+      <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
+      <thead><tr data-bind="foreach:volHead"><th data-bind="text:$data"></th></tr></thead>
+      <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">
+      <tr data-bind="attr: {'data-guestid': $data }"></tr>
+      </tbody>
+      <tfoot></tfoot>
+      </table>
       </article>
     </main>
     <div class="sidemenu">
       <h2 class="heading">Partitions</h2>
-      <button data-bind="click: addPartition" class="addPartition">Create Partition</button>
-      <ol class="ranking" data-bind="foreach:listPartitions">
+      <ol class="ranking" data-bind="foreach:partitions">
       <li class="ranking-item">
           <section data-bind="click:$root.onPartition">
             <span class="order"></span>
@@ -48,7 +48,6 @@
           </section>
       </li>
       </ol>
-      <button data-bind="click: morePartition" class="morePartition">もっと表示する</button>
       <h2 class="heading">Members</h2>
       <ul class="documents">
         <li>

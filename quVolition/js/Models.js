@@ -3,13 +3,23 @@ var viewModel = function( partitions, members) {
 	this.partitions = ko.mapping.fromJS( partitions);
 	this.members = ko.mapping.fromJS( members);
 	this.partitionId = ko.observable( partitions[0].Id || 0);
-	this.onPartition = function( o,e) {
-		self.partitionId( o.Id());
+	this.partitionBy = ko.observable(3);
+	this.onPartition = function (o, e) {
+	    self.partitionId(o.Id());
 	}.bind(this);
-	this.onVilition = function( o,e) {
+	this.listPartitions = ko.computed( function() {
+	    return self.partitions();
+	});
+	this.addPartition = function (o, e) {
+	    var obj = o;
+	}.bind(this);
+	this.addSection = function (o, e) {
 		var obj = o;
 	}.bind(this);
-	this.Idx = function() {
+	this.delSection = function (o, e) {
+	    var obj = o;
+	}.bind(this);
+	this.Idx = function () {
 		for ( var i = 0; i < self.partitions().length; i++) {
 			if ( self.partitions()[i].Id() === self.partitionId()) return i;
 		}
