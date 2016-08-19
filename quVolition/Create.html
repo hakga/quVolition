@@ -2,16 +2,14 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>スタンダードレイアウト</title>
+  <title>出欠サービス：CREATE</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/jquery.customSelect.js"></script>
 </head>
 <body>
   <header class="header">
     <h1 class="logo">
-      <a href="/">SAMPLE SITEE</a>
+      <a href="/">出欠サービス</a>
     </h1>
     <nav class="global-nav">
       <ul>
@@ -26,17 +24,35 @@
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
       <article class="hot-topic clearfix">
-      <form class="Partition" data-bind="with:partitions()[Idx()]">
-      <input data-bind="textInput:name" />
-      <input data-bind="textInput:description" />
-      <ul data-bind="foreach: sections"><li><button data-bind="click: $root.delSection" class="addSection">－</button><input data-bind="textInput:$data" /></li></ul>
-      <button data-bind="click: $root.addSection" class="addSection">＋</button>
-      </form>
+      <form class="partitions editPartition">
+<!-- ko with:partitions()[Idx()] -->
+          <section class="setConfig"><label>登録名称</label><input data-bind="textInput:name" size="32" /></section>
+          <section class="setConfig"><label>有効期間</label><input data-bind="textInput:term" size="20" /></section>
+          <section class="setConfig"><label>詳細</label><input data-bind="textInput:description" size="68" /></section>
+          <section class="setConfig"><label>候補</label><ul data-bind="foreach: sections">
+              <li><button data-bind="click: $root.delSection, attr: {'data-section':$index}" class="setting sections delBtn">×</button><input data-bind="textInput:$data" /></li></ul>
+              <button data-bind="click: $root.addSection" class="setting sections addBtn">＋</button>
+          </section>
+          <section class="setConfig"><label>選択肢</label><ul data-bind="foreach: options">
+              <li><button data-bind="click: $root.delOption, attr: {'data-option':$index}" class="setting options delBtn">×</button><input data-bind="textInput:$data" /></li></ul>
+              <button data-bind="click: $root.addOption" class="setting options addBtn">＋</button>
+          </section>
+<!-- /ko -->
+          <section class="setConfig">
+              <label>利用者</label><ul data-bind="foreach: members" class="members">
+                  <li><input type="checkbox" data-bind="value: Id, checked: $root.guested" /><span data-bind="text: name"></span></li>
+              </ul>
+          </section>
+        </form>
+          <form class="partitions commitPartition">
+              <button data-bind="click: addPartition, text: partitionId()==0 ? '登録':'更新'" class="partition addBtn"></button>
+              <button data-bind="click: delPartition, text: partitionId()==0 ? '取消':'削除'" class="partition delBtn"></button>
+          </form>
       </article>
     </main>
     <div class="sidemenu">
       <h2 class="heading">Partitions</h2>
-      <button data-bind="click: addPartition" class="addPartition">Create Partition</button>
+      <button data-bind="click: newPartition" class="newPartition addBtn">Create Partition</button>
       <ol class="ranking" data-bind="foreach:listPartitions">
       <li class="ranking-item">
           <section data-bind="click:$root.onPartition">
@@ -48,24 +64,17 @@
           </section>
       </li>
       </ol>
-      <button data-bind="click: morePartition" class="morePartition">もっと表示する</button>
-      <h2 class="heading">Members</h2>
-      <ul class="documents">
-        <li>
-          <h3 class="title">Networkers</h3>
-          <ul data-bind="foreach:members">
-            <li data-bind="text:$data.name"></li>
-          </ul>
-        </li>
-      </ul>
+      <button data-bind="click: morePartitions" class="morePartitions">more...</button>
     </div>
   </div>
   <footer class="footer">
     <p class="copyright">Copyright © 2015 SAMPLE SITE</p>
   </footer>
-<script type="text/javascript" src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
-<script type="text/javascript" src="js/knockout.mapping.js"></script>
-<script type="text/javascript" src="js/Models.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+<script src="js/knockout.mapping.js"></script>
+<script src="js/jquery.customSelect.min.js"></script>
+<script src="js/Models.js"></script>
 <script type="text/javascript">
 (function(){
 	initialize();
