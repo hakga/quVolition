@@ -519,7 +519,7 @@ a:link, a:visited, a:hover, a:active {
     display: inline-block;
     width: 4em;
     border-style: none;
-    border-radius: 12px;
+    border-radius: 6px;
     font-size: 1.4em;
     color: white;
     margin: 0 100px;

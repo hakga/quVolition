@@ -23,7 +23,7 @@
   <div class="wrapper clearfix">
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
-      <article class="hot-topic clearfix">
+      <article data-bind="if: notEmpty" class="hot-topic clearfix">
       <form class="partitions editPartition">
 <!-- ko with:partitions()[Idx()] -->
           <section class="setConfig"><label>登録名称</label><input data-bind="textInput:name" size="32" /></section>
@@ -45,8 +45,8 @@
           </section>
         </form>
           <form class="partitions commitPartition">
-              <button data-bind="click: addPartition, text: partitionId()==0 ? '登録':'更新'" class="partition addBtn"></button>
-              <button data-bind="click: delPartition, text: partitionId()==0 ? '取消':'削除'" class="partition delBtn"></button>
+              <button data-bind="click: updatePartition, text: partitionId()==0 ? '登録':'更新'" class="partition addBtn"></button>
+              <button data-bind="click: removePartition, text: partitionId()==0 ? '取消':'削除'" class="partition delBtn"></button>
           </form>
       </article>
     </main>

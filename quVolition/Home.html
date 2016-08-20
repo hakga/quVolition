@@ -23,7 +23,7 @@
   <div class="wrapper clearfix">
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
-      <article class="hot-topic clearfix">
+      <article data-bind="if: notEmpty" class="hot-topic clearfix">
       <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
       <thead><tr data-bind="foreach:volHead"><th data-bind="text:$data"></th></tr></thead>
       <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">

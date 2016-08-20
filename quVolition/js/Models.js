@@ -4,8 +4,19 @@ var viewModel = function( partitions, members) {
 	var self = this;
 	this.partitions = ko.mapping.fromJS( partitions);
 	this.members = ko.mapping.fromJS( members);
-	this.partitionId = ko.observable( partitions[0].Id || 0);
+	this.partitionId = ko.observable( 0 < partitions.length ? partitions[0].Id : -1);	// partitionId:-1 は空フラグ
 	this.partitionBy = ko.observable(3);
+	this.Idx = function () {
+	    var id = self.partitionId();
+	    if (id == -1) id = 0;       // もし partitions が空でなく、現 partitionId が-1なら今、追加したところのはず！（遅延処理の代用）
+	    for (var i = 0; i < self.partitions().length; i++) {
+	        if (self.partitions()[i].Id() === id) return i;
+	    }
+	    return -1;	//no data
+	};
+	this.notEmpty = ko.computed(function () {
+	    return 0 < self.partitions().length;
+	});
 	this.onPartition = function (o, e) {
 		self.partitionId(o.Id());
 	}.bind(this);
@@ -15,19 +26,19 @@ var viewModel = function( partitions, members) {
 		}).slice( 0, self.partitionBy()+1);
 	});
 	this.morePartitions = function (o, e) {
-	    self.partitionBy(self.partitionBy() + 2);
+		self.partitionBy(self.partitionBy() + 2);
 	}.bind(this);
 	this.newPartition = function (o, e) {
-	    var pTerm = new Date();
-	    pTerm.setDate(pTerm.getDate() + 14);
-	    self.partitions.push(ko.mapping.fromJS({ "Id": 0, "name": "", "description": "", "sections": [], "guests": [], "options": [], "term": pTerm.toISOString() }));
+		var pTerm = new Date();
+		pTerm.setDate(pTerm.getDate() + 14);
+		self.partitions.push(ko.mapping.fromJS({ "Id": 0, "name": "", "description": "", "sections": [], "guests": [], "options": [], "term": pTerm.toISOString() }));
 		self.partitionId(0);
 	}.bind(this);
-	this.addPartition = function (o, e) {
+	this.updatePartition = function (o, e) {
 		var pData = self.partitions()[self.Idx()];
 		var pUrl = 'api/Partitions/';
 		var pType;
-		if ( self.partitionId() == 0) {
+		if ( self.partitionId() === 0) {
 			pType =  'POST';
 		} else {
 			pType =  'PUT';
@@ -45,55 +56,74 @@ var viewModel = function( partitions, members) {
 			alert('登録失敗');
 		});
 	}.bind(this);
-	this.delPartition = function (o, e) {
+	this.removePartition = function (o, e) {
+		if (self.partitionId() === 0 || confirm("データを完全に消去しますか？") == true) {
+			self.partitions.splice(self.Idx(), 1); // しかる後、削除
+			self.partitionId(self.partitions()[0].Id);            // 先に移動しておく
+		}
 	}.bind(this);
 	this.addSection = function (o, e) {
 		self.partitions()[self.Idx()].sections.push("");
 	}.bind(this);
 	this.delSection = function (o, e) {
 	    var idx = $(e.target).data('section');
-		self.partitions()[self.Idx()].sections.splice(idx, 1) ;
+	    var sec = self.partitions()[self.Idx()].sections;
+	    if (sec()[idx] == "") {
+	        sec.splice(idx, 1);
+	    } else {
+	        alert("空でない要素は削除できません");
+	    }
 	}.bind(this);
-	this.Idx = function () {
-		for ( var i = 0; i < self.partitions().length; i++) {
-			if ( self.partitions()[i].Id() === self.partitionId()) return i;
-		}
-		return -1;	//no data
-	};
+	this.addOption = function (o, e) {
+	    self.partitions()[self.Idx()].options.push("");
+	}.bind(this);
+	this.delOption = function (o, e) {
+	    var idx = $(e.target).data('option');
+	    var opt = self.partitions()[self.Idx()].options;
+	    if (opt()[idx] == "") {
+	        opt.splice(idx, 1);
+	    } else {
+	        alert("空でない要素は削除できません");
+	    }
+	}.bind(this);
 	this.volHead = ko.computed( function() {
 		var cols = ["Name"];
-		$.each( self.partitions()[self.Idx()].sections(), function( i, v) {
-			cols.push( v);
-		});
+		if ( self.notEmpty()) {
+		    $.each(self.partitions()[self.Idx()].sections(), function (i, v) {
+				cols.push(v);
+			});
+		}
 		return cols;
 	});
 	this.volitions = ko.computed( function() {
 		var cols = {};	// 連想配列を作成（ただし中身は後から入れておく）
-		$.ajax ({
-			url: 'api/Volitions/'+self.partitionId(),
-			type: 'GET',
-			scriptCharset:'utf-8',
-			dataType: 'json'
-		}).done( function( json) {
-			$.each( json, function( i, v) {
-				v.Selected.unshift(self.nameMembers(v.GuestId));
-				cols[v.GuestId] = v.Selected;
-			});
-// knockoutでどうしても実装できなかったのでjQueryに逃げた
-			var $select = $('<select>').addClass('customSelect');
-			$.each( self.partitions()[self.Idx()].options(), function( i, v) {
-				$select.append('<option>'+v);	//).html(v).val(v);
-			});
-			$('#Volititions tr').empty().each(function() {
-				$elm = $(this);
-				$.each( cols[$(this).data("guestid")],function(i,v) {
-					if ( i === 0)	$elm.append('<td>'+v);
-					else			$elm.append($('<td>').append($select.clone().val(v).on('change', self.onChange)));
+		if ( self.notEmpty()) {
+		    $.ajax({
+				url: 'api/Volitions/'+self.partitionId(),
+				type: 'GET',
+				scriptCharset:'utf-8',
+				dataType: 'json'
+			}).done( function( json) {
+				$.each( json, function( i, v) {
+					v.Selected.unshift(self.nameMembers(v.GuestId));
+					cols[v.GuestId] = v.Selected;
 				});
+	// knockoutでどうしても実装できなかったのでjQueryに逃げた
+				var $select = $('<select>').addClass('customSelect');
+				$.each( self.partitions()[self.Idx()].options(), function( i, v) {
+					$select.append('<option>'+v);	//).html(v).val(v);
+				});
+				$('#Volititions tr').empty().each(function() {
+					$elm = $(this);
+					$.each( cols[$(this).data("guestid")],function(i,v) {
+						if ( i === 0)	$elm.append('<td>'+v);
+						else			$elm.append($('<td>').append($select.clone().val(v).on('change', self.onChange)));
+					});
+				});
+				$(".customSelect").customSelect();
+			}).fail(function() {
 			});
-			$(".customSelect").customSelect();
-		}).fail(function() {
-		});
+		}
 		return cols;
 	});
 	this.nameMembers = function( guestId) {
@@ -103,8 +133,10 @@ var viewModel = function( partitions, members) {
 		return "";	//no data
 	};
 	this.guested = ko.computed(function () {
-	    return self.partitions()[self.Idx()].guests();
-	})
+	    if (self.notEmpty()) {
+	        return self.partitions()[self.Idx()].guests();
+	    } else return;
+	});
 	this.onChange = function( e) {	// event fired with jQuery
 		var tr =  $(e.target).parents('tr')[0];
 		var guestid = $(tr).data('guestid');
