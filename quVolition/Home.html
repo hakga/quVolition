@@ -25,7 +25,7 @@
       <h2 class="hidden">Review Partition</h2>
       <article data-bind="if: notEmpty" class="hot-topic clearfix">
       <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
-      <thead><tr data-bind="foreach:volHead"><th data-bind="text:$data"></th></tr></thead>
+      <thead><tr data-bind="foreach:volHead" class="volHead"><th data-bind="text:$data"></th></tr></thead>
       <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">
       <tr data-bind="attr: {'data-guestid': $data }"></tr>
       </tbody>
@@ -41,7 +41,7 @@
             <span class="order"></span>
             <p class="text"><span data-bind="text:$data.name"></span><br>
             <span data-bind="text:$data.description" class="text description"></span><br>
-            <span data-bind="text:$data.sections().join(' ')" class="text description"></span>
+                <span data-bind="text:$.map( $data.sections(), function(n){ return n();}).join(' ')" class="text description"></span>
             </p>
           </section>
       </li>

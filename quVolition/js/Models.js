@@ -1,9 +1,13 @@
 /// <reference path="jquery.customSelect.min.js">
-
+var fromAddress = "master@foo.jp";
 var viewModel = function( partitions, members) {
-	var self = this;
-	this.partitions = ko.mapping.fromJS( partitions);
-	this.members = ko.mapping.fromJS( members);
+    var self = this;
+    var mapping = {
+        'sections': { create: function (options) { return ko.observable(options.data); } },
+        'options': { create: function (options) { return ko.observable(options.data); } }
+    }
+    this.partitions = ko.mapping.fromJS(partitions, mapping);
+    this.members = ko.mapping.fromJS(members);
 	this.partitionId = ko.observable( 0 < partitions.length ? partitions[0].Id : -1);	// partitionId:-1 は空フラグ
 	this.partitionBy = ko.observable(3);
 	this.Idx = function () {
@@ -20,7 +24,7 @@ var viewModel = function( partitions, members) {
 	this.onPartition = function (o, e) {
 		self.partitionId(o.Id());
 	}.bind(this);
-	this.listPartitions = ko.computed( function() {
+	this.listPartitions = ko.pureComputed(function () {
 		return self.partitions.sort( function (left,right) {
 			return left.term()==right.term()?0:(left.term()<right.term()?-1:1);
 		}).slice( 0, self.partitionBy()+1);
@@ -62,31 +66,44 @@ var viewModel = function( partitions, members) {
 			self.partitionId(self.partitions()[0].Id);            // 先に移動しておく
 		}
 	}.bind(this);
+	this.invitePartition = function (o, e) {
+	    var gIds = self.guested();
+	    $.map( self.members(), function (i, v) {
+	        if (0 < $.inArray(v.Id, gIds)) return v;
+	    }).each( function (i, v) {
+	        putMail(self.partitionId(), v.Id, v.name, v.mail);
+	    });
+	    var param = $.map(self.members(), function (i, v) {
+	        if (0 < $.inArray(v.Id, gIds)) return new { GuestId: v.Id, name: v.name, addr: v.addr};
+	    });
+	    posMail(self.partitionId(), fromAddress, param);
+
+	}.bind(this);
 	this.addSection = function (o, e) {
-		self.partitions()[self.Idx()].sections.push("");
+	    self.partitions()[self.Idx()].sections.push(ko.observable(""));
 	}.bind(this);
 	this.delSection = function (o, e) {
 	    var idx = $(e.target).data('section');
 	    var sec = self.partitions()[self.Idx()].sections;
-	    if (sec()[idx] == "") {
+	    if (sec()[idx]() == "") {
 	        sec.splice(idx, 1);
 	    } else {
 	        alert("空でない要素は削除できません");
 	    }
 	}.bind(this);
 	this.addOption = function (o, e) {
-	    self.partitions()[self.Idx()].options.push("");
+	    self.partitions()[self.Idx()].options.push(ko.observable(""));
 	}.bind(this);
 	this.delOption = function (o, e) {
 	    var idx = $(e.target).data('option');
 	    var opt = self.partitions()[self.Idx()].options;
-	    if (opt()[idx] == "") {
+	    if (opt()[idx]() == "") {
 	        opt.splice(idx, 1);
 	    } else {
 	        alert("空でない要素は削除できません");
 	    }
 	}.bind(this);
-	this.volHead = ko.computed( function() {
+	this.volHead = ko.pureComputed(function () {
 		var cols = ["Name"];
 		if ( self.notEmpty()) {
 		    $.each(self.partitions()[self.Idx()].sections(), function (i, v) {
@@ -95,7 +112,7 @@ var viewModel = function( partitions, members) {
 		}
 		return cols;
 	});
-	this.volitions = ko.computed( function() {
+	this.volitions = ko.computed(function () {
 		var cols = {};	// 連想配列を作成（ただし中身は後から入れておく）
 		if ( self.notEmpty()) {
 		    $.ajax({
@@ -110,7 +127,7 @@ var viewModel = function( partitions, members) {
 				});
 	// knockoutでどうしても実装できなかったのでjQueryに逃げた
 				var $select = $('<select>').addClass('customSelect');
-				$.each( self.partitions()[self.Idx()].options(), function( i, v) {
+				$.each( $.map( self.partitions()[self.Idx()].options(), function(n) { return n();}), function( i, v) {
 					$select.append('<option>'+v);	//).html(v).val(v);
 				});
 				$('#Volititions tr').empty().each(function() {
@@ -132,7 +149,7 @@ var viewModel = function( partitions, members) {
 		}
 		return "";	//no data
 	};
-	this.guested = ko.computed(function () {
+	this.guested = ko.pureComputed( function() {
 	    if (self.notEmpty()) {
 	        return self.partitions()[self.Idx()].guests();
 	    } else return;
@@ -157,8 +174,9 @@ var viewModel = function( partitions, members) {
 		}).fail( function() {
 		});
 	}.bind(this);
-	this.test = function( o,e) {
-		return ;
+	this.test = function () {
+	    var g = 0 < self.guested.length;
+	    return g;
 	}.bind(this);
 };
 function initialize() {
@@ -178,3 +196,29 @@ function initialize() {
 	}).fail( function() {
 	});
 }
+function postMail(pId, fAddr, param) {
+    $.ajax({
+        url: 'api/Members/',
+        type: 'post',
+        scriptCharset: 'utf-8',
+        data: { PartitionId: pId, fromAddr: fAddr, toList: param },
+        dataType: 'json'
+    }).done(function (json) {
+        alert('登録完了');
+    }).fail(function () {
+        alert('登録失敗');
+    });
+};
+function putMail(pId, gId, name, mail) {
+    $.ajax({
+        url: 'api/Members/' + pId + '/' + gId,
+        type: 'put',
+        scriptCharset: 'utf-8',
+        data: { toName: name, toAddr: mail, fromAddr: fromAddress, subject: '', body: '' },
+        dataType: 'json'
+    }).done(function (json) {
+        alert('登録完了');
+    }).fail(function () {
+        alert('登録失敗');
+    });
+};

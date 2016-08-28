@@ -45,7 +45,7 @@ a:link, a:visited, a:hover, a:active {
 .header {
   width: 100%;
   padding: 28px 0 10px;
-  background: url('../images/bg-header.gif') repeat-x;
+  background: url('../images/bg-header.png') repeat-x;
   box-shadow: 0 0 10px 1px #e3e3e3;
 }
 .logo {
@@ -84,7 +84,7 @@ a:link, a:visited, a:hover, a:active {
 }
 .global-nav .nav-item.active a,
 .global-nav .nav-item a:hover {
-  background-color: #d03c56;
+  background-color: #0094ff;
   color: #fff;
 }
 
@@ -346,7 +346,7 @@ a:link, a:visited, a:hover, a:active {
 .footer {
   width: 100%;
   padding: 15px 0 20px;
-  background: skyblue;
+  background: #62b7f5;
   color: #fff;
 }
 .horizontal-list {
@@ -423,10 +423,12 @@ a:link, a:visited, a:hover, a:active {
 
 .main .Partition {
   width: 100%;
+  table-layout: fixed;
 }
 .main .Partition caption {
   width: 100%;
   line-height: 25px;
+  padding: 4px 0;
   background-color: lightcyan;
 }
 .wrapper .main .Partition {
@@ -438,7 +440,12 @@ a:link, a:visited, a:hover, a:active {
 .wrapper .main .Partition tr>*:first-child {
   width: 130px;
 }
-
+.Partition tr.volHead th {
+    width:auto;
+}
+.Partition tr.volHead>*:first-child {
+    width: 8em;
+}
 .customSelect {
   border: 1px solid whitesmoke;
   border-radius: 5px;
@@ -512,15 +519,23 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 5px;
     background-color: whitesmoke;
 }
-.partitions.commitPartition {
+.partitions.commitPartition ul {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
     padding: 12px;
 }
+.partitions.commitPartition ul li {
+    display: table-cell;
+}
 .commitPartition .partition {
-    display: inline-block;
-    width: 4em;
     border-style: none;
     border-radius: 6px;
     font-size: 1.4em;
     color: white;
-    margin: 0 100px;
+    padding: 2px 16px;
+}
+.mailBtn {
+    background-color: #dab413;
 }

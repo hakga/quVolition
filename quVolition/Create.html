@@ -29,12 +29,16 @@
           <section class="setConfig"><label>登録名称</label><input data-bind="textInput:name" size="32" /></section>
           <section class="setConfig"><label>有効期間</label><input data-bind="textInput:term" size="20" /></section>
           <section class="setConfig"><label>詳細</label><input data-bind="textInput:description" size="68" /></section>
-          <section class="setConfig"><label>候補</label><ul data-bind="foreach: sections">
-              <li><button data-bind="click: $root.delSection, attr: {'data-section':$index}" class="setting sections delBtn">×</button><input data-bind="textInput:$data" /></li></ul>
+          <section class="setConfig">
+              <label>候補</label><ul data-bind="foreach: sections">
+                  <li><button data-bind="click: $root.delSection, attr: {'data-section':$index}" class="setting sections delBtn">×</button><input data-bind="textInput:$rawData" /></li>
+              </ul>
               <button data-bind="click: $root.addSection" class="setting sections addBtn">＋</button>
           </section>
-          <section class="setConfig"><label>選択肢</label><ul data-bind="foreach: options">
-              <li><button data-bind="click: $root.delOption, attr: {'data-option':$index}" class="setting options delBtn">×</button><input data-bind="textInput:$data" /></li></ul>
+          <section class="setConfig">
+              <label>選択肢</label><ul data-bind="foreach: options">
+                  <li><button data-bind="click: $root.delOption, attr: {'data-option':$index}" class="setting options delBtn">×</button><input data-bind="textInput:$rawData" /></li>
+              </ul>
               <button data-bind="click: $root.addOption" class="setting options addBtn">＋</button>
           </section>
 <!-- /ko -->
@@ -45,8 +49,11 @@
           </section>
         </form>
           <form class="partitions commitPartition">
-              <button data-bind="click: updatePartition, text: partitionId()==0 ? '登録':'更新'" class="partition addBtn"></button>
-              <button data-bind="click: removePartition, text: partitionId()==0 ? '取消':'削除'" class="partition delBtn"></button>
+              <ul>
+                  <li><button data-bind="click: updatePartition, text: partitionId()==0 ? '登録':'更新'" class="partition addBtn"></button></li>
+                  <li><button data-bind="click: invitePartition" class="partition mailBtn">一斉通知</button></li>
+                  <li><button data-bind="click: removePartition, text: partitionId()==0 ? '取消':'削除'" class="partition delBtn"></button></li>
+              </ul>
           </form>
       </article>
     </main>
@@ -59,7 +66,7 @@
             <span class="order"></span>
             <p class="text"><span data-bind="text:$data.name"></span><br>
             <span data-bind="text:$data.description" class="text description"></span><br>
-            <span data-bind="text:$data.sections().join(' ')" class="text description"></span>
+            <span data-bind="text:$.map( $data.sections(), function(n){ return n();}).join(' ')" class="text description"></span>
             </p>
           </section>
       </li>

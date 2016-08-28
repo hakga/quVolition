@@ -20,45 +20,46 @@ namespace quVolition.Controllers
             return "value";
         }
 
+        static string subjectTemplate = "登録依頼";
+        static string bodyTemplate = "%name% 様\n以下のサイトにアクセスして、ご登録をお願いします。\n";
+        static string registerPage = "/Register.html?pId=%pId%&gId=%gId%";
         // POST: api/Members
-        public void Post( int id, [FromBody]paramMessage value ) {
-            using ( var client = new System.Net.Mail.SmtpClient(getWebConfig("MailServerHost"), 25) ) {
-                var message = new System.Net.Mail.MailMessage();
-                message.From = new System.Net.Mail.MailAddress(value.fromAddr);
-                var guests = value.toAddr;
-                if ( guests.Count() <= 0) {
-                    guests = new VolitionClassesDataContext().Partitions.Where(p => id == p.Id).Select(p => p.guests).FirstOrDefault().Split(',');
+        public void Post( [FromBody]paramMailContents value ) {
+            int? id = value.PartitionId;
+            var url = Request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped) + registerPage;
+            var partition = new VolitionClassesDataContext().Partitions.Where(p => id == p.Id).Select(p => new { name = p.name, description = p.description }).FirstOrDefault();
+            if ( partition != null ) {
+                using ( var client = new System.Net.Mail.SmtpClient(getWebConfig("MailServerHost"), 25) ) {
+                    var message = new System.Net.Mail.MailMessage();
+                    message.From = new System.Net.Mail.MailAddress(value.fromAddr);
+                    message.Priority = System.Net.Mail.MailPriority.High;
+                    message.Headers["Date"] = DateTime.Now.ToString("r");
+                    message.Subject = subjectTemplate + "《" + partition.name + "》";
+                    foreach ( var t in value.toList ) {
+                        message.Body = bodyTemplate + registerPage;
+                        message.Body = message.Body.Replace("%pId%", id.ToString()).Replace("%gId%", t.GuestId).Replace("%name%", t.name);
+                        message.To.Clear();
+                        message.To.Add(new System.Net.Mail.MailAddress(t.addr));
+                        client.Send(message);
+                    }
+                    client.Dispose();
                 }
-                foreach ( var t in guests) {
-                    message.To.Add(new System.Net.Mail.MailAddress(t));
-                }
-                message.Priority = System.Net.Mail.MailPriority.High;
-                message.Headers["Date"] = DateTime.Now.ToString("r");
-                message.Subject = value.subject;
-                message.Body = value.body;
-                client.Send(message);
-                client.Dispose();
             }
         }
 
         // PUT: api/Members/5
-        public void Put(int id, [FromBody]paramMessage value ) {
+        [Route("api/Members/{pId}/{gId}")]
+        public void Put( int pId, string gId, [FromBody]paramMessage value ) {
             using ( var client = new System.Net.Mail.SmtpClient(getWebConfig("MailServerHost"), 25) ) {
                 var message = new System.Net.Mail.MailMessage();
+                message.To.Add(new System.Net.Mail.MailAddress(value.toAddr));
                 message.From = new System.Net.Mail.MailAddress(value.fromAddr);
                 message.Priority = System.Net.Mail.MailPriority.High;
                 message.Headers["Date"] = DateTime.Now.ToString("r");
                 message.Subject = value.subject;
-                var guests = value.toAddr;
-                if ( guests.Count() <= 0 ) {
-                    guests = new VolitionClassesDataContext().Partitions.Where(p => id == p.Id).Select(p => p.guests).FirstOrDefault().Split(',');
-                }
-                foreach ( var t in guests ) {
-                    message.To.Clear();
-                    message.To.Add(new System.Net.Mail.MailAddress(t));
-                    message.Body = value.body.Replace("%pId%", id.ToString()).Replace( "%gId%", t);
-                    client.Send(message);
-                }
+                message.Body = value.body;
+                message.Body = message.Body.Replace("%parameter%", "/" + pId + "/" + gId);
+                client.Send(message);
                 client.Dispose();
             }
         }

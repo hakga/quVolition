@@ -21,9 +21,20 @@ namespace quVolition.Models {
         public string[] Selected { get; set; }
     }
     public class paramMessage {
-        public string[] toAddr { get; set; }
+        public string toAddr { get; set; }
+        public string toName { get; set; }
         public string fromAddr { get; set; }
         public string subject { get; set; }
         public string body { get; set; }
+    }
+    public class paramMailContents {
+        public int PartitionId { get; set; }
+        public string fromAddr { get; set; }
+        public paramToList[] toList { get; set; }
+    }
+    public class paramToList {
+        public string GuestId { get; set; }
+        public string name { get; set; }
+        public string addr { get; set; }
     }
 }
