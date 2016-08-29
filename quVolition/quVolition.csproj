@@ -200,6 +200,7 @@
     <Content Include="js\knockout.mapping.js" />
     <Content Include="js\Members.js" />
     <Content Include="js\Models.js" />
+    <Content Include="Register.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

@@ -11,14 +11,6 @@
     <h1 class="logo">
       <a href="/">出欠サービス</a>
     </h1>
-    <nav class="global-nav">
-      <ul>
-        <li class="nav-item active"><a href="#">HOME</a></li>
-        <li class="nav-item"><a href="Create.html">CREATE</a></li>
-        <li class="nav-item"><a href="#">MEMBER</a></li>
-        <li class="nav-item"><a href="#">REPORT</a></li>
-      </ul>
-    </nav>
   </header>
   <div class="wrapper clearfix">
     <main class="main">
@@ -33,29 +25,6 @@
       </table>
       </article>
     </main>
-    <div class="sidemenu">
-      <h2 class="heading">Partitions</h2>
-      <ol class="ranking" data-bind="foreach:partitions">
-      <li class="ranking-item">
-          <section data-bind="click:$root.onPartition">
-            <span class="order"></span>
-            <p class="text"><span data-bind="text:$data.name"></span><br>
-            <span data-bind="text:$data.description" class="text description"></span><br>
-                <span data-bind="text:$.map( $data.sections(), function(n){ return n();}).join(' ')" class="text description"></span>
-            </p>
-          </section>
-      </li>
-      </ol>
-      <h2 class="heading">Members</h2>
-      <ul class="documents">
-        <li>
-          <h3 class="title">Networkers</h3>
-          <ul data-bind="foreach:members">
-            <li data-bind="text:$data.name"></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
   </div>
   <footer class="footer">
     <p class="copyright">Copyright © Fireballer</p>
