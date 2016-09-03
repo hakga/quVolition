@@ -14,15 +14,14 @@
   </header>
   <div class="wrapper clearfix">
     <main class="main">
-      <h2 class="hidden">Review Partition</h2>
+      <h2 class="hidden">Register Volition</h2>
       <article data-bind="if: notEmpty" class="hot-topic clearfix">
-      <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
-      <thead><tr data-bind="foreach:volHead" class="volHead"><th data-bind="text:$data"></th></tr></thead>
-      <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">
-      <tr data-bind="attr: {'data-guestid': $data }"></tr>
-      </tbody>
-      <tfoot></tfoot>
-      </table>
+      <ul data-bind="template:foreach:sections" class="Sections">
+          <li>
+              <label data-bind="text:section"></label>
+              <select data-bind="options:option"></select>
+          </li>
+      </ul>
       </article>
     </main>
   </div>
@@ -33,7 +32,7 @@
 <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
 <script src="js/knockout.mapping.js"></script>
 <script src="js/jquery.customSelect.min.js"></script>
-<script src="js/Models.js"></script>
+<script src="js/Register.js"></script>
 <script type="text/javascript">
 (function(){
 	initialize();
