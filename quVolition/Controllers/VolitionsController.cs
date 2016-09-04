@@ -35,8 +35,15 @@ namespace quVolition.Controllers {
         [Route("api/Volitions/{pId}/{gId}")]
         public IEnumerable<Volition> GetVolitions( int pId, string gId ) {
             var db = new VolitionClassesDataContext();
-            var vo = db.Volitions.Where(r => pId == r.PartitionId && gId == r.GuestId).Select(r => new Volition { PartitionId = r.PartitionId, GuestId = r.GuestId, Selected = r.Selected.Split(','), Updated = r.Updated });
-            return vo;
+            var pa = db.Partitions.Where(r => pId == r.Id && r.guests.Contains(gId)).FirstOrDefault();
+            if ( pa != null) {
+                var vo = db.Volitions.Where(r => pId == r.PartitionId && gId == r.GuestId).Select(r => new Volition { PartitionId = r.PartitionId, GuestId = r.GuestId, Selected = r.Selected.Split(','), Updated = r.Updated }).ToList();
+                if ( vo.Count <= 0 ) {
+                    vo.Add(new Volition{ PartitionId = pId, GuestId = gId, Selected = new string[pa.sections.Count()]});
+                } 
+                return vo;
+            }
+            return null;
         }
 
         // POST api/values
