@@ -18,6 +18,9 @@ a:link, a:visited, a:hover, a:active {
   color: #d03c56;
   text-decoration: none;
 }
+ul {
+    list-style:none;
+}
 
 
 /* --------------------------------
@@ -101,6 +104,11 @@ a:link, a:visited, a:hover, a:active {
 /* --------------------------------
  * main
  * -------------------------------- */
+.entry {
+  display: block;
+  width: 100%;
+  height: 500px;
+}
 .main {
   display: block;
   float: left;
@@ -345,7 +353,7 @@ a:link, a:visited, a:hover, a:active {
  * -------------------------------- */
 .footer {
   width: 100%;
-  padding: 15px 0 20px;
+  padding: 6px 0 8px;
   background: #62b7f5;
   color: #fff;
 }
@@ -446,26 +454,6 @@ a:link, a:visited, a:hover, a:active {
 .Partition tr.volHead>*:first-child {
     width: 8em;
 }
-.customSelect {
-  border: 1px solid whitesmoke;
-  border-radius: 5px;
-  width: 86%;
-}
-.customSelect.changed {
-/* You can use this if you want a different style after user has made a selection */
-}
-.customSelectFocus {
-  border: 1px solid whitesmoke;
-}
-.customSelectOpen {
-}
-/* We can style the inner box, too */
-.customSelectInner {
-}
-.customSelect.customSelectHover {
-  border: 2px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-}
 .partitions.editPartition .setConfig {
     width: 96%;
     margin: 7px auto;
@@ -474,7 +462,6 @@ a:link, a:visited, a:hover, a:active {
 }
 .partitions.editPartition .setConfig ul {
     margin: 4px auto;
-    list-style-type: none;
 }
 .partitions.editPartition .setConfig label {
     display:inline-block;
@@ -502,6 +489,9 @@ a:link, a:visited, a:hover, a:active {
 .addBtn {
     background-color: #00FF33;
 }
+.updBtn {
+    background-color: #00FF33;
+}
 .partitions.editPartition .setConfig .members li {
     display:inline-block;
     width:19%;
@@ -519,17 +509,17 @@ a:link, a:visited, a:hover, a:active {
     border-radius: 5px;
     background-color: whitesmoke;
 }
-.partitions.commitPartition ul {
+.actions ul {
     display: table;
     table-layout: fixed;
     width: 100%;
     text-align: center;
     padding: 12px;
 }
-.partitions.commitPartition ul li {
+.actions ul li {
     display: table-cell;
 }
-.commitPartition .partition {
+.actions .comitter {
     border-style: none;
     border-radius: 6px;
     font-size: 1.4em;
@@ -538,4 +528,47 @@ a:link, a:visited, a:hover, a:active {
 }
 .mailBtn {
     background-color: #dab413;
+}
+ul.Sections {
+    display: table;
+    width: 100%;
+    border-collapse:separate;
+    border-spacing:10px 0;
+}
+.Sections li.register {
+    display: table-cell;
+    vertical-align:middle;
+    background-color:floralwhite;
+    padding-bottom: 10px;
+}
+.Sections .register>* {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 12px auto;
+}
+.Sections .register .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.Sections .register select {
+    font-size: 1.8rem;
+}
+.selected.submitter.updBtn {
+    display:block;
+    margin: auto auto 0;
+}
+.entry .partition {
+    padding: 3px;
+}
+.entry .partition.name {
+    text-align:center;
+    font-size: 1.5em;
+}
+.entry .partition.description {
+    font-size: 1.2em;
+}
+.entry .partition.term {
+    text-align:right;
+    font-size: 1.2em;
 }

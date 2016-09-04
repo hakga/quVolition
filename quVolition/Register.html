@@ -5,6 +5,29 @@
   <title>出欠サービス：HOME</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
+    <style>
+.customSelect {
+  background-color:ghostwhite;
+  border: 1px solid silver;
+  border-radius: 5px;
+  width: 86%;
+}
+.customSelect.changed {
+/* You can use this if you want a different style after user has made a selection */
+}
+.customSelectFocus {
+  border: 1px solid whitesmoke;
+}
+.customSelectOpen {
+}
+/* We can style the inner box, too */
+.customSelectInner {
+}
+.customSelect.customSelectHover {
+  border: 2px solid #ccc;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+    </style>
 </head>
 <body>
   <header class="header">
@@ -13,16 +36,24 @@
     </h1>
   </header>
   <div class="wrapper clearfix">
-    <main class="main">
+    <main class="entry">
       <h2 class="hidden">Register Volition</h2>
-      <article data-bind="if: notEmpty" class="hot-topic clearfix">
-      <ul data-bind="template:foreach:sections" class="Sections">
-          <li>
-              <label data-bind="text:section"></label>
-              <select data-bind="options:option"></select>
+      <article data-bind="if: notEmpty" class="clearfix">
+          <p data-bind="text:partition.name" class="partition name"></p>
+          <p data-bind="text:partition.description" class="partition description"></p>
+          <p data-bind="text:termDateTime(partition.term)" class="partition term"></p>
+      <ul data-bind="foreach: selecting" class="Sections">
+          <li class="register">
+              <label data-bind="text:sec" class="title"></label>
+              <select data-bind="options:opt, value: sel" class="customSelect"></select>
           </li>
       </ul>
       </article>
+        <form class="actions">
+            <ul>
+                <li><button data-bind="click: updateSelected" class="comitter updBtn">更新</button></li>
+            </ul>
+        </form>
     </main>
   </div>
   <footer class="footer">
@@ -30,12 +61,13 @@
   </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
-<script src="js/knockout.mapping.js"></script>
 <script src="js/jquery.customSelect.min.js"></script>
-<script src="js/Register.js"></script>
+<script src="js/getParameter.js" charset="UTF-8"></script>
+<script src="js/Register.js" charset="UTF-8"></script>
 <script type="text/javascript">
 (function(){
-	initialize();
+    var param = getParameter();
+    initialize( param.pid, param.gid);
 })();
 </script>
 </body>

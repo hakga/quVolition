@@ -196,6 +196,7 @@
     <Content Include="images\bg-slash.gif" />
     <Content Include="images\logo.png" />
     <Content Include="index.html" />
+    <Content Include="js\getParameter.js" />
     <Content Include="js\jquery.customSelect.min.js" />
     <Content Include="js\knockout.mapping.js" />
     <Content Include="js\Members.js" />

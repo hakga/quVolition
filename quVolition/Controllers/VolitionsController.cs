@@ -10,7 +10,7 @@ namespace quVolition.Controllers {
     public class VolitionsController : ApiController {
         // GET api/values
         public Volition Get() {
-            return new Volition { PartitionId = 0, GuestId = "001", Selected = new string[] {"ロシア" },Updated=DateTime.Today};
+            return new Volition { PartitionId = 0, GuestId = "", Selected = new string[] {}, Updated=DateTime.Today};
         }
 
         // GET api/values/5

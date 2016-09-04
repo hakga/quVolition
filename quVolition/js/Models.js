@@ -190,7 +190,7 @@ function initialize() {
 	}).done( function( json) {
 		partitions = json;
 		$.getJSON("js/Members.js", function( json){
-		members = json;
+		    members = json;
 			ko.applyBindings( new viewModel( partitions, members));
 		});
 	}).fail( function() {

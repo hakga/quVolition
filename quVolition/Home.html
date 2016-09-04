@@ -5,6 +5,28 @@
   <title>出欠サービス：HOME</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+.customSelect {
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  width: 86%;
+}
+.customSelect.changed {
+/* You can use this if you want a different style after user has made a selection */
+}
+.customSelectFocus {
+  border: 1px solid whitesmoke;
+}
+.customSelectOpen {
+}
+/* We can style the inner box, too */
+.customSelectInner {
+}
+.customSelect.customSelectHover {
+  border: 2px solid #ccc;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+  </style>
 </head>
 <body>
   <header class="header">
@@ -26,7 +48,7 @@
       <article data-bind="if: notEmpty" class="hot-topic clearfix">
       <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
       <thead><tr data-bind="foreach:volHead" class="volHead"><th data-bind="text:$data"></th></tr></thead>
-      <tbody data-bind="foreach:partitions()[Idx()].guests()" id="Volititions">
+      <tbody data-bind="foreach:partitions()[Idx()].guests()" class="volBody" id="Volititions">
       <tr data-bind="attr: {'data-guestid': $data }"></tr>
       </tbody>
       <tfoot></tfoot>
