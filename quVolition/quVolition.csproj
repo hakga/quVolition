@@ -192,10 +192,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Home.html" />
-    <Content Include="images\bg-header.gif" />
+    <Content Include="images\bg-header.png" />
     <Content Include="images\bg-slash.gif" />
     <Content Include="images\logo.png" />
-    <Content Include="index.html" />
     <Content Include="js\getParameter.js" />
     <Content Include="js\jquery.customSelect.min.js" />
     <Content Include="js\knockout.mapping.js" />
