@@ -6,7 +6,8 @@ var viewModel = function( partition, volition, member) {
     this.notEmpty = partition != null && volition != null && member != null;
     this.selecting = ko.observableArray([]);
     var len = volition.Selected.length;
-    $.each(partition.sections, function (i,v) {
+    this.partition.options.unshift("");
+    $.each(partition.sections, function (i, v) {
         self.selecting.push({ sec: v, sel: ko.observable(i < len ? volition.Selected[i] : ""), opt: partition.options });
     });
     this.termDateTime = function (term) {
@@ -25,6 +26,7 @@ var viewModel = function( partition, volition, member) {
 		});
 	}.bind(this);
 	this.test = function () {
+	    $(".customSelect").customSelect();
 	}.bind(this);
 };
 function initialize( pId, gId) {

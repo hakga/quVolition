@@ -68,15 +68,16 @@ var viewModel = function( partitions, members) {
 	}.bind(this);
 	this.invitePartition = function (o, e) {
 	    var gIds = self.guested();
-	    $.map( self.members(), function (i, v) {
+	    var gInv = $.map( self.members(), function (i, v) {
 	        if (0 < $.inArray(v.Id, gIds)) return v;
-	    }).each( function (i, v) {
+	    });
+	    $.each( gInv, function (i, v) {
 	        putMail(self.partitionId(), v.Id, v.name, v.mail);
 	    });
-	    var param = $.map(self.members(), function (i, v) {
-	        if (0 < $.inArray(v.Id, gIds)) return new { GuestId: v.Id, name: v.name, addr: v.addr};
+	    var param = $.map(self.members(), function (v,i) {
+	        if (0 < $.inArray(v.Id(), gIds)) return { GuestId: v.Id, name: v.name, addr: v.mail};
 	    });
-	    posMail(self.partitionId(), fromAddress, param);
+	    postMail(self.partitionId(), fromAddress, param);
 
 	}.bind(this);
 	this.addSection = function (o, e) {
