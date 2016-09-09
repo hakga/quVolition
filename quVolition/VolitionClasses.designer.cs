@@ -331,7 +331,7 @@ namespace quVolition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GuestId", DbType="NVarChar(16) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GuestId", DbType="NVarChar(16) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string GuestId
 		{
 			get

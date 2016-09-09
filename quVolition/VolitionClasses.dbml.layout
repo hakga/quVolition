@@ -8,10 +8,10 @@
         <elementListCompartment Id="4bf9d8fb-f831-4a7a-89ce-6be7b979e051" absoluteBounds="1.8899999999999997, 1.21, 1.9700000000000002, 1.5104166666666665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="78c8d89e-fb09-4f94-b9aa-97b587df774e" absoluteBounds="4.75, 2.625, 2, 1.5235416666666666">
+    <classShape Id="1cc9908c-f4a7-4f26-a798-972c694e624f" absoluteBounds="4.75, 1.875, 2, 1.5235416666666666">
       <DataClassMoniker Name="/VolitionClassesDataContext/Volitions" />
       <nestedChildShapes>
-        <elementListCompartment Id="e80112c2-5418-496a-a231-2a2b6706b8b9" absoluteBounds="4.765, 3.085, 1.9700000000000002, 0.96354166666666674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a746c4b3-fa6a-4a6b-b191-c9abdbc5f1bc" absoluteBounds="4.765, 2.335, 1.9700000000000002, 0.96354166666666674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
