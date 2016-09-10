@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <title>出欠サービス：HOME</title>
   <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
     <style>
         .customSelect {
             background-color: ghostwhite;
@@ -40,12 +41,13 @@
       <a href="/">出欠サービス</a>
     </h1>
   </header>
-  <div class="wrapper clearfix">
+  <div class="nowrapper">
     <main class="entry">
       <h2 class="hidden">Register Volition</h2>
       <article data-bind="if: notEmpty" class="clearfix">
           <p data-bind="text:partition.name" class="partition name"></p>
           <p data-bind="text:partition.description" class="partition description"></p>
+          <p data-bind="text:yourName" class="partition yourname"></p>
           <p data-bind="text:termDateTime(partition.term)" class="partition term"></p>
       <ul data-bind="foreach: selecting" class="Sections">
           <li class="register">

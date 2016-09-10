@@ -5,6 +5,7 @@ var viewModel = function( partition, volition, member) {
     this.GuestId = volition.GuestId;
     this.notEmpty = partition != null && volition != null && member != null;
     this.selecting = ko.observableArray([]);
+    this.yourName = member.name;
     var len = volition.Selected.length;
     this.partition.options.unshift("");
     $.each(partition.sections, function (i, v) {
@@ -12,7 +13,7 @@ var viewModel = function( partition, volition, member) {
     });
     this.termDateTime = function (term) {
         var dt = new Date(term);
-        return dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日 " + dt.toLocaleTimeString();;
+        return "期限：" + dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日 " + dt.toLocaleTimeString();;
     };
     this.updateSelected = function (o, e) {
 		$.ajax ({
