@@ -24,7 +24,8 @@
   <div class="wrapper clearfix">
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
-      <article data-bind="if: notEmpty" class="hot-topic clearfix">
+      <article class="Is-loading" style="width:100%; text-align:center; display:none"><img src="images/gif-load.gif" /></article>
+      <article data-bind="if: notEmpty" class="hot-topic clearfix Is-loading">
       <form class="partitions editPartition">
 <!-- ko with:partitions()[Idx()] -->
           <section class="setConfig"><label>登録名称</label><input data-bind="textInput:name" size="32" /></section>
@@ -67,7 +68,6 @@
             <span class="order"></span>
             <p class="text"><span data-bind="text:$data.name"></span><br>
             <span data-bind="text:$data.description" class="text description"></span><br>
-            <span data-bind="text:$.map( $data.sections(), function(n){ return n();}).join(' ')" class="text description"></span>
             </p>
           </section>
       </li>

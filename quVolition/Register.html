@@ -8,31 +8,25 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
     <style>
-        .customSelect {
-            background-color: ghostwhite;
-            border: 1px solid silver;
-            border-radius: 5px;
-            width: 80px;
-        }
-
-            .customSelect.changed {
-                /* You can use this if you want a different style after user has made a selection */
-            }
-
-        .customSelectFocus {
-            border: 1px solid whitesmoke;
-        }
-
-        .customSelectOpen {
-        }
-        /* We can style the inner box, too */
-        .customSelectInner {
-        }
-
-        .customSelect.customSelectHover {
-            border: 2px solid #ccc;
-            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-        }
+.customSelect {
+	background-color: ghostwhite;
+	border: 1px solid silver;
+	border-radius: 5px;
+	width: 80px;
+}
+.customSelect.changed {
+}
+.customSelectFocus {
+	border: 1px solid whitesmoke;
+}
+.customSelectOpen {
+}
+.customSelectInner {
+}
+.customSelect.customSelectHover {
+	border: 2px solid #ccc;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
     </style>
 </head>
 <body>
@@ -44,7 +38,8 @@
   <div class="nowrapper">
     <main class="entry">
       <h2 class="hidden">Register Volition</h2>
-      <article data-bind="if: notEmpty" class="clearfix">
+      <article class="Is-loading" style="width:100%; text-align:center; display:none"><img src="images/gif-load.gif" /></article>
+      <article data-bind="if: notEmpty" class="clearfix Is-loading">
           <p data-bind="text:partition.name" class="partition name"></p>
           <p data-bind="text:partition.description" class="partition description"></p>
           <p data-bind="text:yourName" class="partition yourname"></p>

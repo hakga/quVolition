@@ -8,8 +8,10 @@ var viewModel = function( partitions, members) {
     }
     this.partitions = ko.mapping.fromJS(partitions, mapping);
     this.members = ko.mapping.fromJS(members);
+    this.groups = groupList;
 	this.partitionId = ko.observable( 0 < partitions.length ? partitions[0].Id : -1);	// partitionId:-1 は空フラグ
 	this.partitionBy = ko.observable(3);
+	this.groupId = ko.observable(-1);
 	this.Idx = function () {
 	    var id = self.partitionId();
 	    if (id == -1) id = 0;       // もし partitions が空でなく、現 partitionId が-1なら今、追加したところのはず！（遅延処理の代用）
@@ -68,14 +70,14 @@ var viewModel = function( partitions, members) {
 	}.bind(this);
 	this.invitePartition = function (o, e) {
 	    var gIds = self.guested();
-	    var gInv = $.map( self.members(), function (i, v) {
-	        if (0 < $.inArray(v.Id, gIds)) return v;
+/*      var gInv = $.map( self.members(), function (v,i) {
+	        if (0 < $.inArray(v.Id(), gIds)) return ko.mapping.toJS(v);
 	    });
-	    $.each( gInv, function (i, v) {
+	    $.each( gInv, function (i,v) {
 	        putMail(self.partitionId(), v.Id, v.name, v.mail);
 	    });
-	    var param = $.map(self.members(), function (v,i) {
-	        if (0 < $.inArray(v.Id(), gIds)) return { GuestId: v.Id, name: v.name, addr: v.mail};
+*/	    var param = $.map(self.members(), function (v,i) {
+	        if (0 < $.inArray(v.Id(), gIds)) return { GuestId: v.Id(), name: v.name(), addr: v.mail()};
 	    });
 	    postMail(self.partitionId(), fromAddress, param);
 
@@ -175,6 +177,16 @@ var viewModel = function( partitions, members) {
 		}).fail( function() {
 		});
 	}.bind(this);
+	this.showGroup = function (o,e) {
+	    var group = $(e.target).data('group');
+	    if (self.groupId() == group) group = -1;
+	    self.groupId(group);
+	};
+	this.getMembers = function ( group) {
+	    return ko.utils.arrayFilter(this.members(), function (v, i) {
+            return 0 <= $.inArray(+group, v.group());
+	    });
+	}.bind(this);
 	this.test = function () {
 	    var g = 0 < self.guested.length;
 	    return g;
@@ -183,7 +195,8 @@ var viewModel = function( partitions, members) {
 function initialize() {
 	var partitions;
 	var members;
-	$.ajax ({
+	$('.Is-loading').toggle();
+	$.ajax({
 		url: 'api/Partitions',
 		type: 'GET',
 		scriptCharset:'utf-8',
@@ -193,8 +206,9 @@ function initialize() {
 		$.getJSON("js/Members.js", function( json){
 		    members = json;
 			ko.applyBindings( new viewModel( partitions, members));
-		});
+		}).complete(function () { $('.Is-loading').toggle() });
 	}).fail( function() {
+	    $('.Is-loading').toggle();
 	});
 }
 function postMail(pId, fAddr, param) {
@@ -215,7 +229,7 @@ function putMail(pId, gId, name, mail) {
         url: 'api/Members/' + pId + '/' + gId,
         type: 'put',
         scriptCharset: 'utf-8',
-        data: { toName: name, toAddr: mail, fromAddr: fromAddress, subject: '', body: '' },
+        data: { toName: name, toAddr: mail, fromAddr: fromAddress, subject: '登録依頼', body: 'メール本文' },
         dataType: 'json'
     }).done(function (json) {
         alert('登録完了');

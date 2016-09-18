@@ -33,6 +33,7 @@ var viewModel = function( partition, volition, member) {
 function initialize( pId, gId) {
 	var partition;
 	var volition;
+	$('.Is-loading').toggle();
 	$.ajax ({
 	    url: 'api/Partitions/' + pId,
 		type: 'GET',
@@ -52,7 +53,8 @@ function initialize( pId, gId) {
 	            ko.applyBindings(new viewModel(partition[0], volition[0], member[0]));
 	        });
 	    }).fail(function () {
-	    });
-	}).fail( function() {
+	    }).complete(function () { $('.Is-loading').toggle(); });
+	}).fail(function () {
+	    $('.Is-loading').toggle();
 	});
 }

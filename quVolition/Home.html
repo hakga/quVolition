@@ -13,14 +13,12 @@
   width: 86%;
 }
 .customSelect.changed {
-/* You can use this if you want a different style after user has made a selection */
 }
 .customSelectFocus {
   border: 1px solid whitesmoke;
 }
 .customSelectOpen {
 }
-/* We can style the inner box, too */
 .customSelectInner {
 }
 .customSelect.customSelectHover {
@@ -46,6 +44,7 @@
   <div class="wrapper clearfix">
     <main class="main">
       <h2 class="hidden">Review Partition</h2>
+      <article class="Is-loading" style="width:100%; text-align:center; display:none"><img src="images/gif-load.gif" /></article>
       <article data-bind="if: notEmpty" class="hot-topic clearfix">
       <table class="Partition"><caption data-bind="text:partitions()[Idx()].name"></caption>
       <thead><tr data-bind="foreach:volHead" class="volHead"><th data-bind="text:$data"></th></tr></thead>
@@ -64,16 +63,15 @@
             <span class="order"></span>
             <p class="text"><span data-bind="text:$data.name"></span><br>
             <span data-bind="text:$data.description" class="text description"></span><br>
-                <span data-bind="text:$.map( $data.sections(), function(n){ return n();}).join(' ')" class="text description"></span>
             </p>
           </section>
       </li>
       </ol>
       <h2 class="heading">Members</h2>
-      <ul class="documents">
+      <ul data-bind="foreach:groups" class="documents">
         <li>
-          <h3 class="title">Networkers</h3>
-          <ul data-bind="foreach:members">
+          <h3 data-bind="click:$root.showGroup, attr:{'data-group':Id}, text:name" class="title"></h3>
+          <ul data-bind="foreach:$root.getMembers($data.Id), visible: $root.groupId()==$data.Id">
             <li data-bind="text:$data.name"></li>
           </ul>
         </li>
@@ -88,6 +86,7 @@
 <script src="js/knockout.mapping.js"></script>
 <script src="js/jquery.customSelect.min.js"></script>
 <script src="js/Models.js"></script>
+<script src="js/Groups.js"></script>
 <script type="text/javascript">
 (function(){
 	initialize();

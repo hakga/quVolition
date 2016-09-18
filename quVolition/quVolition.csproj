@@ -194,8 +194,10 @@
     <Content Include="Home.html" />
     <Content Include="images\bg-header.png" />
     <Content Include="images\bg-slash.gif" />
+    <Content Include="images\gif-load.gif" />
     <Content Include="images\logo.png" />
     <Content Include="js\getParameter.js" />
+    <Content Include="js\Groups.js" />
     <Content Include="js\jquery.customSelect.min.js" />
     <Content Include="js\knockout.mapping.js" />
     <Content Include="js\Members.js" />
