@@ -71,7 +71,7 @@
       <ul data-bind="foreach:groups" class="documents">
         <li>
           <h3 data-bind="click:$root.showGroup, attr:{'data-group':Id}, text:name" class="title"></h3>
-          <ul data-bind="foreach:$root.getMembers($data.Id), visible: $root.groupId()==$data.Id">
+          <ul data-bind="foreach:$root.getMembers(Id), visible: $root.groupId()==Id">
             <li data-bind="text:$data.name"></li>
           </ul>
         </li>
@@ -86,10 +86,11 @@
 <script src="js/knockout.mapping.js"></script>
 <script src="js/jquery.customSelect.min.js"></script>
 <script src="js/Models.js"></script>
+<script src="js/Members.js"></script>
 <script src="js/Groups.js"></script>
 <script type="text/javascript">
 (function(){
-	initialize();
+    initialize( MemberList, GroupList);
 })();
 </script>
 </body>
