@@ -187,10 +187,27 @@ var viewModel = function (partitions, members, groups) {
             return 0 <= $.inArray(+group, v.group());
 	    });
 	}.bind(this);
-	this.checkUp = function (o, e) {    // o.Id is selected group.
+	this.selectedGroup = ko.observable('');
+	this.getGroups = ko.pureComputed( function() {
+	    var groupOpt = ko.utils.arrayMap(self.groups, function (v, i) {
+	        return { value: v.Id, text: v.name };
+	    });
+	    groupOpt.unshift({ value: -1, text: 'クリア' });
+	    return groupOpt;
+	});
+	this.setMembers = ko.computed(function () {
+	    var group = self.selectedGroup();
+	    if (self.notEmpty() && 0 < group.length) {          // any member belong to selected group, set into guests of current partition.
+	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+group, v.group()) }), function (v, i) { return v.Id() }));
+	    }
+	});
+	this.clickedGroupButton = function (o, e) {    // o.Id is selected group.
+	    this.checkUp(o.Id);
+	}.bind(this);
+	this.checkUp = function (group) {
 	    var self = this;
 	    if (self.notEmpty()) {          // any member belong to selected group, set into guests of current partition.
-	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+o.Id, v.group())}), function (v, i) { return v.Id() }));
+	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+group, v.group())}), function (v, i) { return v.Id() }));
 	    }
 	}.bind(this);
 };

@@ -48,7 +48,7 @@
               <label>利用者</label><ul data-bind="foreach: members" class="members">
                   <li><input type="checkbox" data-bind="value: Id, checked: $root.guested" /><span data-bind="text: name"></span></li>
               </ul>
-              <ul data-bind="foreach: groups" class="groups"><li><button data-bind="click: $root.checkUp, text: name"></button></li></ul>
+              <select data-bind="options: getGroups, optionsText:'text', optionsValue:'value', valueAllowUnset:true, value:selectedGroup" class="groups"></select>
           </section>
         </form>
           <form class="actions">
