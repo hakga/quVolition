@@ -1,6 +1,6 @@
 /// <reference path="jquery.customSelect.min.js">
 var fromAddress = "master@foo.jp";
-var viewModel = function( partitions, members) {
+var viewModel = function (partitions, members, groups) {
     var self = this;
     var mapping = {
         'sections': { create: function (options) { return ko.observable(options.data); } },
@@ -8,7 +8,7 @@ var viewModel = function( partitions, members) {
     }
     this.partitions = ko.mapping.fromJS(partitions, mapping);
     this.members = ko.mapping.fromJS(members);
-    this.groups = groupList;
+    this.groups = groups;
 	this.partitionId = ko.observable( 0 < partitions.length ? partitions[0].Id : -1);	// partitionId:-1 は空フラグ
 	this.partitionBy = ko.observable(3);
 	this.groupId = ko.observable(-1);
@@ -187,12 +187,14 @@ var viewModel = function( partitions, members) {
             return 0 <= $.inArray(+group, v.group());
 	    });
 	}.bind(this);
-	this.test = function () {
-	    var g = 0 < self.guested.length;
-	    return g;
+	this.checkUp = function (o, e) {    // o.Id is selected group.
+	    var self = this;
+	    if (self.notEmpty()) {          // any member belong to selected group, set into guests of current partition.
+	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+o.Id, v.group())}), function (v, i) { return v.Id() }));
+	    }
 	}.bind(this);
 };
-function initialize() {
+function initialize( members, groups) {
 	var partitions;
 	var members;
 	$('.Is-loading').toggle();
@@ -201,15 +203,10 @@ function initialize() {
 		type: 'GET',
 		scriptCharset:'utf-8',
 		dataType: 'json'
-	}).done( function( json) {
-		partitions = json;
-		$.getJSON("js/Members.js", function( json){
-		    members = json;
-			ko.applyBindings( new viewModel( partitions, members));
-		}).complete(function () { $('.Is-loading').toggle() });
+	}).done( function( partitions) {
+	    ko.applyBindings( new viewModel( partitions, members, groups));
 	}).fail( function() {
-	    $('.Is-loading').toggle();
-	});
+	}).complete(function () { $('.Is-loading').toggle() });
 }
 function postMail(pId, fAddr, param) {
     $.ajax({

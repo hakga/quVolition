@@ -457,6 +457,15 @@ ul {
     display:inline-block;
     width:19%;
 }
+.partitions.editPartition .setConfig .groups li {
+    display:inline-block;
+    width:19%;
+}
+.partitions.editPartition .setConfig .groups button {
+    background-color: aquamarine;
+    border: none;
+    font-size: 0.8em;
+}
 .sidemenu .newPartition {
     display: block;
     margin: 4px auto;
