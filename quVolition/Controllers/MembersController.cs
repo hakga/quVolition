@@ -22,7 +22,7 @@ namespace quVolition.Controllers
 
         static string subjectTemplate = "登録依頼";
         static string bodyTemplate = "%name% 様\n以下のサイトにアクセスして、ご登録をお願いします。\n";
-        static string registerPage = "/Register.html?pId=%pid%&gId=%gid%";
+        static string registerPage = "/Register.html?pid=%pId%&gid=%gId%";
         // POST: api/Members
         public void Post( [FromBody]paramMailContents value ) {
             int? id = value.PartitionId;

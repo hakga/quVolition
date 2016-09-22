@@ -116,55 +116,7 @@ ul {
   float: left;
   width: 660px;
 }
-.hot-topic {
-  display: block;
-  min-height:500px;
-  height:auto !important;
-  height:500px;
-  margin-bottom: 30px;
-  box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.15);
-  transition: opacity 0.15s;
-}
-.hot-topic:hover {
-  opacity: 0.85;
-}
-.hot-topic .image {
-  float: left;
-  width: 50%;
-  height: 100%;
-}
-.hot-topic .content {
-  position: relative;
-  float: left;
-  width: 50%;
-  height: 100%;
-  padding: 105px 25px 0;
-  background-color: #2d3d54;
-  line-height: 1.6;
-}
-.hot-topic .title {
-  margin-bottom: 15px;
-  color: #fff;
-  font-weight: normal;
-  font-size: 2.0rem;
-}
-.hot-topic .desc {
-  color: #ddc;
-}
-.hot-topic .date {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 140px;
-  padding: 4px;
-  background-color: #fff;
-  color: #2d3d54;
-  text-align: center;
-  letter-spacing: 1px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  line-height: 1;
-}
+
 .article-box {
   position: relative;
   display: block;
@@ -306,51 +258,27 @@ ul {
   list-style-type: none;
 }
 .documents > li .title {
-  margin: 15px 0;
+  margin: 15px 0 0;
   padding-left: 8px;
   border-left: 5px solid #d03c56;
   font-size: 1.4rem;
   line-height: 1.2;
 }
+.documents > li .title:hover {
+  opacity: 0.8;
+}
 .documents > li + li {
-  margin-top: 25px;
 }
 .documents > li ul {
-  margin: 15px;
+  margin: 6px 10px 0;
 }
 .documents > li ul > li {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   padding-left: 10px;
 }
 .documents a:hover {
   text-decoration: underline;
 }
-.search-box {
-  padding: 15px;
-  background-color: #ccc;
-  font-size: 0;
-}
-.search-box > * {
-  font-size: 1.2rem;
-}
-.search-box .search-input {
-  width: 205px;
-  height: 26px;
-  padding: 0 10px;
-  border: none;
-}
-.search-box .search-button {
-  width: 40px;
-  height: 26px;
-  border: none;
-  background-color: #d03c56;
-  color: #fff;
-  cursor: pointer;
-}
-.search-box .text {
-  margin-top: 12px;
-}
-
 
 /* --------------------------------
  * footer
@@ -457,14 +385,9 @@ ul {
     display:inline-block;
     width:19%;
 }
-.partitions.editPartition .setConfig .groups li {
-    display:inline-block;
-    width:19%;
-}
-.partitions.editPartition .setConfig .groups button {
-    background-color: aquamarine;
-    border: none;
-    font-size: 0.8em;
+.partitions.editPartition .setConfig .groups {
+    display:block;
+    margin:6px 0 6px auto;
 }
 .sidemenu .newPartition {
     display: block;

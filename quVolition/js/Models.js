@@ -192,7 +192,7 @@ var viewModel = function (partitions, members, groups) {
 	    var groupOpt = ko.utils.arrayMap(self.groups, function (v, i) {
 	        return { value: v.Id, text: v.name };
 	    });
-	    groupOpt.unshift({ value: -1, text: 'クリア' });
+	    groupOpt.unshift({ value: '-1', text: 'クリア' });
 	    return groupOpt;
 	});
 	this.setMembers = ko.computed(function () {
@@ -201,15 +201,6 @@ var viewModel = function (partitions, members, groups) {
 	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+group, v.group()) }), function (v, i) { return v.Id() }));
 	    }
 	});
-	this.clickedGroupButton = function (o, e) {    // o.Id is selected group.
-	    this.checkUp(o.Id);
-	}.bind(this);
-	this.checkUp = function (group) {
-	    var self = this;
-	    if (self.notEmpty()) {          // any member belong to selected group, set into guests of current partition.
-	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+group, v.group())}), function (v, i) { return v.Id() }));
-	    }
-	}.bind(this);
 };
 function initialize( members, groups) {
 	var partitions;
