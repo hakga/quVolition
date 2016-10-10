@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>出欠サービス：REPORT</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">
+            <a href="/">出欠サービス</a>
+        </h1>
+        <nav class="global-nav">
+            <ul>
+                <li class="nav-item"><a href="Home.html">HOME</a></li>
+                <li class="nav-item"><a href="Create.html">CREATE</a></li>
+                <li class="nav-item"><a href="#">MEMBER</a></li>
+                <li class="nav-item active"><a href="#">REPORT</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="wrapper clearfix">
+        <main class="main">
+            <h2 class="hidden">Report Partition</h2>
+            <article class="Is-loading" style="width:100%; text-align:center; display:none"><img src="images/gif-load.gif" /></article>
+            <article data-bind="if: notEmpty" class="hot-topic clearfix">
+                <table class="Partition">
+                    <caption data-bind="text:partitions()[Idx()].name"></caption>
+                    <thead><tr data-bind="foreach:secHead" class="secHead"><th data-bind="text:$data"></th></tr></thead>
+                    <tbody data-bind="foreach:computedOption" class="secBody" id="Options">
+                        <tr data-bind="foreach:$data"><td data-bind="text:$data.disp, attr:{'data-guests':$data.data}"></td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </main>
+        <div class="sidemenu">
+            <h2 class="heading">Partitions</h2>
+            <div class=" box--scroll">
+                <ol class="ranking" data-bind="foreach:partitions">
+                    <li class="ranking-item">
+                        <section data-bind="click:$root.onPartition">
+                            <span class="order"></span>
+                            <p class="text">
+                                <span data-bind="text:$data.name"></span><br>
+                                <span data-bind="text:$data.description" class="text description"></span><br>
+                            </p>
+                        </section>
+                    </li>
+                </ol>
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p class="copyright">Copyright © Fireballer</p>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//knockoutjs.com/downloads/knockout-3.4.0.js"></script>
+    <script src="js/knockout.mapping.js"></script>
+    <script src="js/jquery.customSelect.min.js"></script>
+    <script src="js/Models.js"></script>
+    <script src="js/Members.js"></script>
+    <script src="js/Groups.js"></script>
+    <script type="text/javascript">
+(function(){
+    initialize( MemberList, GroupList);
+})();
+    </script>
+</body>
+</html>
+

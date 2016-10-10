@@ -71,13 +71,13 @@ var viewModel = function (partitions, members, groups) {
 	this.invitePartition = function (o, e) {
 	    var gIds = self.guested();
 /*      var gInv = $.map( self.members(), function (v,i) {
-	        if (0 < $.inArray(v.Id(), gIds)) return ko.mapping.toJS(v);
+	        if (0 <= $.inArray(v.Id(), gIds)) return ko.mapping.toJS(v);
 	    });
 	    $.each( gInv, function (i,v) {
 	        putMail(self.partitionId(), v.Id, v.name, v.mail);
 	    });
 */	    var param = $.map(self.members(), function (v,i) {
-	        if (0 < $.inArray(v.Id(), gIds)) return { GuestId: v.Id(), name: v.name(), addr: v.mail()};
+	        if (0 <= $.inArray(v.Id(), gIds)) return { GuestId: v.Id(), name: v.name(), addr: v.mail()};
 	    });
 	    postMail(self.partitionId(), fromAddress, param);
 
@@ -201,6 +201,49 @@ var viewModel = function (partitions, members, groups) {
 	        self.partitions()[self.Idx()].guests(ko.utils.arrayMap(ko.utils.arrayFilter(self.members(), function (v, i) { return 0 <= $.inArray(+group, v.group()) }), function (v, i) { return v.Id() }));
 	    }
 	});
+	this.secHead = ko.pureComputed(function () {
+	    var cols = ["Section"];
+	    if (self.notEmpty()) {
+	        $.each(self.partitions()[self.Idx()].sections(), function (i, v) {
+	            cols.push(v);
+	        });
+	    }
+	    return cols;
+	});
+	this.computedOption = ko.observableArray(); // とりあえず空の配列。中身はselectedOptionに入れておいてもらう
+	this.selectedOption = ko.computed(function () {
+	    var pId = self.partitionId();
+	    self.computedOption.removeAll();    // いったん中身消去
+	    if (self.notEmpty()) {
+	        $.ajax({
+	            url: 'api/Volitions/' + pId,
+	            type: 'GET',
+	            scriptCharset: 'utf-8',
+	            dataType: 'json'
+	        }).done(function (json) {       // 受け取ったGuestIdごとのデータを
+	            var dic = {};               // optionごとの連想配列に組み直す
+	            $.each(json, function (idx, val) {
+	                $.each(val.Selected, function (id, va) {
+	                    if (dic[va] == null) dic[va] = [];
+	                    if (dic[va][id] == null) dic[va][id] = [];
+	                    dic[va][id].push(val.GuestId);
+	                });
+	            });
+	            $.each(dic, function (idx, val) {
+	                val.unshift(idx);       // option名の表示
+	                self.computedOption.push(ko.utils.arrayMap(val, function (v, i) {
+	                    if (v) {
+	                        if (Array.isArray(v)) return { disp: v.length, data: v };
+	                        else return { disp: v, data: [] };  // option名の表示
+	                    } else {
+	                        return { disp: 0, data: [] };   // neither select this one.
+	                    }
+	                }));
+	            });
+	        }).fail(function () {
+	        });
+	    }
+	})();   // 即時実行
 };
 function initialize( members, groups) {
 	var partitions;

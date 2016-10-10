@@ -204,6 +204,7 @@
     <Content Include="js\Register.js" />
     <Content Include="js\Models.js" />
     <Content Include="Register.html" />
+    <Content Include="Report.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

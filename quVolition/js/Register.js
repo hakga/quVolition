@@ -23,7 +23,9 @@ var viewModel = function( partition, volition, member) {
 			data: { Selected: $.map( self.selecting(), function(v,i){ return v.sel()}) },
 			dataType: 'json'
 		}).done( function( json) {
-		}).fail( function() {
+		    alert('登録完了');
+		}).fail(function () {
+		    alert('登録失敗');
 		});
 	}.bind(this);
 	this.test = function () {
@@ -48,10 +50,8 @@ function initialize( pId, gId) {
 	        dataType: 'json'
 	    }).done( function( json) {
 	        volition = json;
-	        $.getJSON("js/Members.js", function (json) {
-	            var member = $.map(json, function(v,i) { if (v.Id == gId) return v });
-	            ko.applyBindings(new viewModel(partition[0], volition[0], member[0]));
-	        });
+	        var member = $.map(MemberList, function (v, i) { if (v.Id == gId) return v });
+	        ko.applyBindings(new viewModel(partition[0], volition[0], member[0]));
 	    }).fail(function () {
 	    }).complete(function () { $('.Is-loading').toggle(); });
 	}).fail(function () {

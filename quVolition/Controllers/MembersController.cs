@@ -27,7 +27,8 @@ namespace quVolition.Controllers
         public void Post( [FromBody]paramMailContents value ) {
             int? id = value.PartitionId;
 //          var url = Request.RequestUri.GetComponents(UriComponents.SchemeAndServer, UriFormat.UriEscaped) + registerPage;
-            var url = getWebConfig("ownURL") + registerPage;
+//          var url = getWebConfig("ownURL") + registerPage;
+            var url = System.Web.Configuration.WebConfigurationManager.AppSettings["OwnUrl"].ToString() + registerPage;
             var partition = new VolitionClassesDataContext().Partitions.Where(p => id == p.Id).Select(p => new { name = p.name, description = p.description }).FirstOrDefault();
             if ( partition != null ) {
                 using ( var client = new System.Net.Mail.SmtpClient() ) {
