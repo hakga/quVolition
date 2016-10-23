@@ -124,13 +124,15 @@ var viewModel = function (partitions, members, groups) {
 				scriptCharset:'utf-8',
 				dataType: 'json'
 			}).done( function( json) {
-				$.each( json, function( i, v) {
+			    var sections_length = self.partitions()[self.Idx()].sections().length;
+			    $.each(json, function (i, v) {
+			        for (var i = v.Selected.length; i < sections_length; i++) v.Selected.push('-');
 					v.Selected.unshift(self.nameMembers(v.GuestId));
 					cols[v.GuestId] = v.Selected;
 				});
 	// knockoutでどうしても実装できなかったのでjQueryに逃げた
 				var $select = $('<select>').addClass('customSelect');
-				$.each( $.map( self.partitions()[self.Idx()].options(), function(n) { return n();}), function( i, v) {
+				$.each($.map(self.partitions()[self.Idx()].options(), function (n) { return n(); }), function (i, v) {
 					$select.append('<option>'+v);	//).html(v).val(v);
 				});
 				$('#Volititions tr').empty().each(function() {
@@ -222,7 +224,9 @@ var viewModel = function (partitions, members, groups) {
 	            dataType: 'json'
 	        }).done(function (json) {       // 受け取ったGuestIdごとのデータを
 	            var dic = {};               // optionごとの連想配列に組み直す
+	            var _options = self.partitions()[self.Idx()].options();
 	            $.each(json, function (idx, val) {
+	                for (var i = val.Selected.length; i < _options.length; i++) val.Selected.push('-');
 	                $.each(val.Selected, function (id, va) {
 	                    if (dic[va] == null) dic[va] = [];
 	                    if (dic[va][id] == null) dic[va][id] = [];

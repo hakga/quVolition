@@ -59,5 +59,10 @@ namespace quVolition.Controllers {
                 Console.Write(e.Message);
             }
         }
+        // DELETE api/values    LIST method（handlerが受け取ってくれない）の代用
+        public IEnumerable<Partition> Delete() {
+            var db = new VolitionClassesDataContext();
+            return db.Partitions.Select(p => new Partition { Id = p.Id, name = p.name, term = p.term });
+        }
     }
 }

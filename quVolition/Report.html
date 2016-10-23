@@ -6,6 +6,7 @@
     <title>出欠サービス：REPORT</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.min.css" />
 </head>
 <body>
     <header class="header">
@@ -30,9 +31,10 @@
                     <caption data-bind="text:partitions()[Idx()].name"></caption>
                     <thead><tr data-bind="foreach:secHead" class="secHead"><th data-bind="text:$data"></th></tr></thead>
                     <tbody data-bind="foreach:computedOption" class="secBody" id="Options">
-                        <tr data-bind="foreach:$data"><td data-bind="text:$data.disp, attr:{'data-guests':$data.data}"></td></tr>
+                        <tr data-bind="foreach:$data"><td data-bind="text:$data.disp, attr:{'data-guests':$data.data}" class="optCounter"></td></tr>
                     </tbody>
                 </table>
+                <div id="namePopup" title="Members"></div>
             </article>
         </main>
         <div class="sidemenu">
@@ -44,7 +46,7 @@
                             <span class="order"></span>
                             <p class="text">
                                 <span data-bind="text:$data.name"></span><br>
-                                <span data-bind="text:$data.description" class="text description"></span><br>
+                                <span data-bind="text:$data.term" class="text date-format"></span><br>
                             </p>
                         </section>
                     </li>
@@ -56,11 +58,12 @@
     <footer class="footer">
         <p class="copyright">Copyright © Fireballer</p>
     </footer>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="//knockoutjs.com/downloads/knockout-3.4.0.js"></script>
     <script src="js/knockout.mapping.js"></script>
     <script src="js/jquery.customSelect.min.js"></script>
-    <script src="js/Models.js"></script>
+    <script src="js/Report.js"></script>
     <script src="js/Members.js"></script>
     <script src="js/Groups.js"></script>
     <script type="text/javascript">
