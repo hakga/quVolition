@@ -279,7 +279,11 @@ ul {
 .documents a:hover {
   text-decoration: underline;
 }
-
+.box--scroll {
+    height: 400px;
+    width: 100%;
+    overflow: scroll; 
+}
 /* --------------------------------
  * footer
  * -------------------------------- */
@@ -485,4 +489,15 @@ ul.Sections {
     width: 20em;
     margin:-16px 12px 12px auto;
     font-size: 1.2em;
+}
+#funcPopup .description {
+    width: 200px;
+    height: 100px;
+    margin:6px 8px;
+    font-size: 0.8rem;
+}
+#funcPopup .term {
+}
+#funcPopup .term input{
+    margin:6px 12px;
 }

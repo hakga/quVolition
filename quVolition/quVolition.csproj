@@ -198,8 +198,12 @@
     <Content Include="images\logo.png" />
     <Content Include="js\getParameter.js" />
     <Content Include="js\Groups.js" />
-    <Content Include="js\jquery.customSelect.min.js" />
-    <Content Include="js\knockout.mapping.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.customSelect.min.js" />
+    <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\knockout.mapping.js" />
     <Content Include="js\Members.js" />
     <Content Include="js\Report.js" />
     <Content Include="js\Register.js" />

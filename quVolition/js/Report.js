@@ -2,6 +2,7 @@
 var fromAddress = "master@foo.jp";
 var viewModel = function (partitions, members, groups) {
     var self = this;
+    this.today = new Date();
     this.partitions = ko.observableArray();
     this.setPartition = function (partition) {
         for (var i = 0; i < self.partitions().length; i++) {
@@ -46,7 +47,9 @@ var viewModel = function (partitions, members, groups) {
 		}
 		return "";	//no data
 	};
-
+	this.isRegistering = function ( term) {
+	    return self.today.getTime() < Date.parse(term);
+	};
 	this.secHead = ko.pureComputed(function () {
 	    var cols = ["Section"];
 	    if (self.notEmpty()) {
@@ -95,12 +98,13 @@ var viewModel = function (partitions, members, groups) {
 	        }).fail(function () {
 	        }).complete(function () {
 	            $('#Options td.optCounter').on('click', function (e) {
-	                var cell = $(this);
-	                var guests = ko.utils.arrayMap($(this).data('guests').split(','), function (v, i) { return '<option>' + self.nameMembers(v) + '</option>' });
-	                self.popup[0].innerHTML = '<ul>' + guests.join('') + '</ul>';
-	                self.popup.dialog({ height: 38+18*guests.length });
-	                self.popup.dialog("open");
-	                window.setTimeout(function () { self.popup.dialog("close") }, 2000);
+	                if (0 < $(this).data('guests').length) {
+	                    var guests = ko.utils.arrayMap( $(this).data('guests').split(','), function (v, i) { return self.nameMembers(v) });
+	                    self.popup[0].innerHTML = '<ul><option>' + guests.join('</option><option>') + '</option></ul>';
+	                    self.popup.dialog({ height: 48 + 17 * guests.length });
+	                    self.popup.dialog("open");
+	                    window.setTimeout(function () { self.popup.dialog("close") }, 3000);
+	                }
 	            });
 	        });
 	    }
@@ -127,12 +131,43 @@ var viewModel = function (partitions, members, groups) {
 	    show: {
 	        effect: "fade",
 	        duration: 250
-	    },
-	    hide: {
+	    },hide: {
 	        effect: "fade",
 	        duration: 250
 	    }
+	});
 
+	this.examination = function () {
+	    var p = self.partitions()[self.Idx()];
+	    $('#funcPopup input').val(p.term);
+	    $('#funcPopup aside').text(p.description);
+	    self.examine.dialog({ title: p.name });
+	    self.examine.dialog("open");
+	};
+	this.changeTerm = function (o,e) {
+	    $.ajax({
+	        url: 'api/Partitions/' + self.partitionId(),
+	        type: 'Patch',     // 
+	        scriptCharset: 'utf-8',
+	        data:{term: $('#funcPopup>section.term input').val()},
+	        dataType: 'json'
+	    }).done(function (partitions) {
+	        self.partitions()[self.Idx()].term = partitions.term;
+	    }).fail(function () {
+	    }).complete(function () {
+	        self.examine.dialog("close");
+	    });
+	};
+	this.examine = $("#funcPopup");
+	this.examine.dialog({
+	    autoOpen: false,
+	    show: {
+	        effect: "fade",
+	        duration: 100
+	    }, hide: {
+	        effect: "fade",
+	        duration: 200
+	    }
 	});
 };
 function initialize( members, groups) {
@@ -141,7 +176,7 @@ function initialize( members, groups) {
 	$('.Is-loading').toggle();
 	$.ajax({
 		url: 'api/Partitions',
-		type: 'GET',
+		type: 'Delete',     // 全選択／期限日時昇順
 		scriptCharset:'utf-8',
 		dataType: 'json'
 	}).done( function( partitions) {
