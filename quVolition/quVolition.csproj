@@ -160,6 +160,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailersController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\PartitionsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -198,6 +199,8 @@
     <Content Include="images\logo.png" />
     <Content Include="js\getParameter.js" />
     <Content Include="js\Groups.js" />
+    <Content Include="js\Mailers.js" />
+    <Content Include="Mailers.html" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-ui.min.css" />
     <Content Include="Scripts\jquery-ui.min.js" />

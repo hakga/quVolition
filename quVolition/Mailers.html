@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>一斉メールサービス</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="Scripts/jquery-ui.min.css" />
+    <style>
+.mail-wrapper {
+  margin: 20px 10px;
+}
+.mail-main {
+  display: block;
+}
+.mail-text>div {
+    margin: 10px auto;
+}
+.mail-text>div label {
+    display:inline-block;
+    width: 6%;
+    text-align: center;
+    vertical-align:top;
+    font-family: "ＭＳ ゴシック";
+    font-size: 1.4rem;
+    color:gray;
+}
+.mail-subject {
+    width: 92%;
+}
+.mail-body {
+    width: 92%;
+}
+.mail-form .mail-list {
+    width: 96%;
+    margin: 7px auto;
+    padding: 5px 7px 5px;
+    background-color:ghostwhite;
+}
+.mail-form .mail-list ul {
+    margin: 4px auto;
+}
+.mail-form .mail-list label {
+    display:inline-block;
+    margin: 6px 2em;
+    text-align: center;
+    font-family: "ＭＳ ゴシック";
+    font-size: 1.4rem;
+    color:gray;
+}
+.mail-form .mail-list .members li {
+    display:inline-block;
+}
+.mail-list__name {
+    display:inline-block;
+    width: 10em;
+}
+.mail-form .mail-list .groups {
+    display:block;
+    margin:6px 0 6px auto;
+}
+div#Popup {
+    overflow: hidden;
+}
+div#Popup p {
+    text-align:center;
+    font-size: 1.2em;
+    margin-top:10px;
+}
+    </style>
+</head>
+<body>
+  <header class="header">
+    <h1 class="logo">
+      <a href="/">出欠サービス</a>
+    </h1>
+  </header>
+  <div class="mail-wrapper clearfix">
+    <main class="maail-main">
+      <h2 class="hidden">Send Mail</h2>
+      <div id="Popup" title="メール送信"></div>
+      <form class="mail-form">
+          <section class="mail-text">
+              <div><label>件名</label><input class="mail-subject" data-bind="textInput: mailSubject" /></div>
+              <div><label>本文</label><textarea class="mail-body" data-bind="textInput: mailBody"></textarea></div>
+          </section>
+          <section class="mail-list">
+              <label>宛先</label><ul data-bind="foreach: members" class="members">
+                  <li><input type="checkbox" data-bind="value: Id, checked: $root.guested" /><span data-bind="text: name" class="mail-list__name"></span></li>
+              </ul>
+              <select data-bind="options: getGroups, optionsText:'text', optionsValue:'value', valueAllowUnset:true, value:selectedGroup" class="groups"></select>
+          </section>
+        </form>
+          <form class="actions">
+              <ul>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="to">個別送信</button></li>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="cc">同報送信</button></li>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="bcc">Bccで送信</button></li>
+              </ul>
+          </form>
+    </main>
+  </div>
+  <footer class="footer">
+    <p class="copyright">Copyright&copy;Fireballer</p>
+  </footer>
+<script src="Scripts/jquery-1.12.4.min.js"></script>
+<script src="Scripts/jquery-ui.min.js"></script>
+<script src="Scripts/knockout-3.4.0.js"></script>
+<script src="Scripts/knockout.mapping.js"></script>
+<script src="js/Mailers.js"></script>
+<script src="js/Members.js"></script>
+<script src="js/Groups.js"></script>
+<script type="text/javascript">
+(function(){
+    initialize( MemberList, GroupList);
+})();
+</script>
+</body>
+</html>

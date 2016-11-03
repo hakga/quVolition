@@ -37,4 +37,10 @@ namespace quVolition.Models {
         public string name { get; set; }
         public string addr { get; set; }
     }
+    public class paramMailContentsFull {
+        public string fromAddr { get; set; }
+        public paramToList[] toList { get; set; }
+        public string subject { get; set; }
+        public string mailBody { get; set; }
+    }
 }
