@@ -20,7 +20,7 @@
       <form class="mail-form">
           <section class="mail-text">
               <div><label>件名</label><input class="mail-subject" data-bind="textInput: mailSubject" /></div>
-              <div><label>本文</label><textarea class="mail-body" data-bind="textInput: mailBody"></textarea></div>
+              <div><label>本文</label><textarea class="mail-body" data-bind="textInput: mailBody" rows="8" placeholder="個別送信では、%name%を宛先で選んだ名前に置換します"></textarea></div>
           </section>
           <section class="mail-list">
               <label>宛先</label><ul data-bind="foreach: members" class="members">
@@ -31,9 +31,9 @@
         </form>
           <form class="actions">
               <ul>
-                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="to">個別送信</button></li>
-                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="cc">同報送信</button></li>
-                  <li><button data-bind="click: invitePartition" class="comitter mailBtn" value="bcc">Bccで送信</button></li>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn mailBtn__to" value="to">個別送信</button></li>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn mailBtn__cc" value="cc">同報送信</button></li>
+                  <li><button data-bind="click: invitePartition" class="comitter mailBtn mailBtn__bcc" value="bcc">Bccで送信</button></li>
               </ul>
           </form>
     </main>

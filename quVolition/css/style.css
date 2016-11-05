@@ -9,7 +9,7 @@ html {
 body {
   color: #333;
   font-size: 1.2rem;
-  font-family: "Hiragino Kaku Gothic ProN",  Meiryo,  sans-serif;
+  font-family: Meiryo,  sans-serif;
 }
 *, *::before, *::after {
   box-sizing: border-box;
@@ -361,7 +361,6 @@ ul {
     margin: auto 2em;
     width: 4em;
     text-align: center;
-    font-family: "ＭＳ ゴシック";
     font-size: 1.2rem;
     color:gray;
 }
@@ -375,6 +374,9 @@ ul {
     color: white;
     border-style: none;
     border-radius: 12px;
+}
+.comitter {
+    color: white;
 }
 .delBtn {
     background-color: #CC3300;
@@ -417,14 +419,21 @@ ul {
     display: table-cell;
 }
 .actions .comitter {
-    border-style: none;
     border-radius: 6px;
     font-size: 1.4em;
-    color: white;
     padding: 2px 16px;
 }
 .mailBtn {
-    background-color: #dab413;
+    color: black;
+}
+.mailBtn__to {
+    background-color: #ffff00;
+}
+.mailBtn__cc {
+    background-color: #99ffff;
+}
+.mailBtn__bcc {
+    background-color: #ffccff;
 }
 ul.Sections {
     display: table;
@@ -518,7 +527,6 @@ ul.Sections {
     width: 6%;
     text-align: center;
     vertical-align:top;
-    font-family: "ＭＳ ゴシック";
     font-size: 1.4rem;
     color:gray;
 }
@@ -541,7 +549,6 @@ ul.Sections {
     display:inline-block;
     margin: 6px 2em;
     text-align: center;
-    font-family: "ＭＳ ゴシック";
     font-size: 1.4rem;
     color:gray;
 }
