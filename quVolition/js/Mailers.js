@@ -60,10 +60,12 @@ var viewModel = function (members, groups) {
 	    }
 	});
 };
-var popup;
-function initialize( members, groups) {
-    popup = $("#Popup");
-    popup.dialog({
+var Popup = function (elementId, msgTitle) {
+    var self = this;
+    this.popDiv = $('<div class="messageDialogs">').prop('id', elementId | 'PopupMessage');
+    $(window.document.body).append(self.popDiv);
+    self.popDiv.dialog({
+        title: msgTitle,
         height: 80,
         width: 150,
         autoOpen: false,
@@ -75,6 +77,15 @@ function initialize( members, groups) {
             duration: 250
         }
     });
+    this.autoMessage = function (msg) {
+        self.popDiv.empty().append( msg);
+        self.popDiv.dialog("open");
+        window.setTimeout(function () { self.popDiv.dialog("close") }, 2000);
+    };
+};
+var msg;
+function initialize( members, groups) {
+    msg = new Popup("PopupMsg", "メール送信");
     ko.applyBindings(new viewModel(members, groups));
 }
 function postMail(sender, param, subject, body) {
@@ -85,13 +96,10 @@ function postMail(sender, param, subject, body) {
         data: { fromAddr: sender, toList: param, subject: subject, mailBody: body },
         dataType: 'json'
     }).done(function (json) {
-        popup[0].innerHTML = '<p>送信完了<p>';
-        popup.dialog("open");
+        msg.autoMessage('<p>送信完了<p>');
     }).fail(function () {
-        popup[0].innerHTML = '<p>送信失敗<p>';
-        popup.dialog("open");
+        msg.autoMessage('<p>送信失敗<p>');
     }).complete(function () {
-        window.setTimeout(function () { popup.dialog("close") }, 2000);
     });
 };
 function putMail(sender, param, subject, body, addr) {
@@ -102,12 +110,9 @@ function putMail(sender, param, subject, body, addr) {
         data: { fromAddr: sender, toList: param, subject: subject, mailBody: body },
         dataType: 'json'
     }).done(function (json) {
-        popup[0].innerHTML = '<p>送信完了<p>';
-        popup.dialog("open");
+        msg.autoMessage('<p>送信完了<p>');
     }).fail(function () {
-        popup[0].innerHTML = '<p>送信失敗<p>';
-        popup.dialog("open");
+        msg.autoMessage('<p>送信失敗<p>');
     }).complete(function () {
-        window.setTimeout(function () { popup.dialog("close") }, 2000);
     });
 };

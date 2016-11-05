@@ -7,68 +7,6 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="Scripts/jquery-ui.min.css" />
-    <style>
-.mail-wrapper {
-  margin: 20px 10px;
-}
-.mail-main {
-  display: block;
-}
-.mail-text>div {
-    margin: 10px auto;
-}
-.mail-text>div label {
-    display:inline-block;
-    width: 6%;
-    text-align: center;
-    vertical-align:top;
-    font-family: "ＭＳ ゴシック";
-    font-size: 1.4rem;
-    color:gray;
-}
-.mail-subject {
-    width: 92%;
-}
-.mail-body {
-    width: 92%;
-}
-.mail-form .mail-list {
-    width: 96%;
-    margin: 7px auto;
-    padding: 5px 7px 5px;
-    background-color:ghostwhite;
-}
-.mail-form .mail-list ul {
-    margin: 4px auto;
-}
-.mail-form .mail-list label {
-    display:inline-block;
-    margin: 6px 2em;
-    text-align: center;
-    font-family: "ＭＳ ゴシック";
-    font-size: 1.4rem;
-    color:gray;
-}
-.mail-form .mail-list .members li {
-    display:inline-block;
-}
-.mail-list__name {
-    display:inline-block;
-    width: 10em;
-}
-.mail-form .mail-list .groups {
-    display:block;
-    margin:6px 0 6px auto;
-}
-div#Popup {
-    overflow: hidden;
-}
-div#Popup p {
-    text-align:center;
-    font-size: 1.2em;
-    margin-top:10px;
-}
-    </style>
 </head>
 <body>
   <header class="header">
@@ -79,7 +17,6 @@ div#Popup p {
   <div class="mail-wrapper clearfix">
     <main class="maail-main">
       <h2 class="hidden">Send Mail</h2>
-      <div id="Popup" title="メール送信"></div>
       <form class="mail-form">
           <section class="mail-text">
               <div><label>件名</label><input class="mail-subject" data-bind="textInput: mailSubject" /></div>

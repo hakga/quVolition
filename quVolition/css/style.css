@@ -501,3 +501,66 @@ ul.Sections {
 #funcPopup .term input{
     margin:6px 12px;
 }
+/* --------------------------------
+ * Mailers.html用
+ * -------------------------------- */
+.mail-wrapper {
+  margin: 20px 10px;
+}
+.mail-main {
+  display: block;
+}
+.mail-text>div {
+    margin: 10px auto;
+}
+.mail-text>div label {
+    display:inline-block;
+    width: 6%;
+    text-align: center;
+    vertical-align:top;
+    font-family: "ＭＳ ゴシック";
+    font-size: 1.4rem;
+    color:gray;
+}
+.mail-subject {
+    width: 92%;
+}
+.mail-body {
+    width: 92%;
+}
+.mail-form .mail-list {
+    width: 96%;
+    margin: 7px auto;
+    padding: 5px 7px 5px;
+    background-color:ghostwhite;
+}
+.mail-form .mail-list ul {
+    margin: 4px auto;
+}
+.mail-form .mail-list label {
+    display:inline-block;
+    margin: 6px 2em;
+    text-align: center;
+    font-family: "ＭＳ ゴシック";
+    font-size: 1.4rem;
+    color:gray;
+}
+.mail-form .mail-list .members li {
+    display:inline-block;
+}
+.mail-list__name {
+    display:inline-block;
+    width: 10em;
+}
+.mail-form .mail-list .groups {
+    display:block;
+    margin:6px 0 6px auto;
+}
+div.messageDialogs {
+    overflow: hidden;
+}
+div.messageDialogs p {
+    text-align:center;
+    font-size: 1.2em;
+    margin-top:10px;
+}
