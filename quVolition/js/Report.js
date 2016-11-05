@@ -100,11 +100,8 @@ var viewModel = function (partitions, members, groups) {
 	            $('#Options td.optCounter').on('click', function (e) {
 	                if (0 < $(this).data('guests').length) {
 	                    var guests = ko.utils.arrayMap( $(this).data('guests').split(','), function (v, i) { return self.nameMembers(v) });
-	                    self.popup[0].innerHTML = '<ul><option>' + guests.join('</option><option>') + '</option></ul>';
-	                    self.popup.dialog({ height: 48 + 17 * guests.length });
-	                    self.popup.dialog("open");
-	                    window.setTimeout(function () { self.popup.dialog("close") }, 3000);
-	                }
+	                    msg.autoMessage('<ul><option>' + guests.join('</option><option>') + '</option></ul>', 48 + 17 * guests.length);
+                    }
 	            });
 	        });
 	    }
@@ -123,19 +120,6 @@ var viewModel = function (partitions, members, groups) {
 	    }).complete(function () {
 	    });
 	}();   // 即時実行
-
-	this.popup = $("#namePopup");
-	this.popup.dialog({
-	    width: 200,
-	    autoOpen: false,
-	    show: {
-	        effect: "fade",
-	        duration: 250
-	    },hide: {
-	        effect: "fade",
-	        duration: 250
-	    }
-	});
 
 	this.examination = function () {
 	    var p = self.partitions()[self.Idx()];
@@ -170,7 +154,31 @@ var viewModel = function (partitions, members, groups) {
 	    }
 	});
 };
-function initialize( members, groups) {
+var Popup = function (elementId, msgTitle) {
+    var self = this;
+    this.popDiv = $('<div class="messageDialogs">').prop('id', elementId | 'PopupMessage');
+    $(window.document.body).append(self.popDiv);
+    self.popDiv.dialog({
+        title: msgTitle,
+        width: 200,
+        autoOpen: false,
+        show: {
+            effect: "fade",
+            duration: 250
+        }, hide: {
+            effect: "fade",
+            duration: 250
+        }
+    });
+    this.autoMessage = function (msg, h) {
+        self.popDiv.dialog({ height: h });
+        self.popDiv.empty().append(msg);
+        self.popDiv.dialog("open");
+        window.setTimeout(function () { self.popDiv.dialog("close") }, 2000);
+    };
+};
+var msg;
+function initialize(members, groups) {
 	var partitions;
 	var members;
 	$('.Is-loading').toggle();
@@ -183,4 +191,5 @@ function initialize( members, groups) {
 	    ko.applyBindings( new viewModel( partitions, members, groups));
 	}).fail( function() {
 	}).complete(function () { $('.Is-loading').toggle() });
+	msg = new Popup("PopupMsg", "Members");
 }
