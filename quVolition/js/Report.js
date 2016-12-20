@@ -1,5 +1,5 @@
 /// <reference path="jquery.customSelect.min.js">
-var fromAddress = "master@foo.jp";
+const fromAddress = "master@foo.jp";
 var viewModel = function (partitions, members, groups) {
     var self = this;
     this.today = new Date();

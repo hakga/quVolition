@@ -1,4 +1,4 @@
-var fromAddress = "master@foo.jp";
+const fromAddress = "master@foo.jp";
 var viewModel = function (members, groups) {
     var self = this;
     this.sender = ko.observable(fromAddress);
@@ -19,7 +19,7 @@ var viewModel = function (members, groups) {
 	            postMail( self.sender, param, self.mailSubject, self.mailBody);
 	            break;
 	        case "cc":
-	        case "to":
+	        case "bcc":
 	            putMail( self.sender, param, self.mailSubject, self.mailBody, addr);
 	            break;
 
@@ -105,7 +105,7 @@ function postMail(sender, param, subject, body) {
 function putMail(sender, param, subject, body, addr) {
     $.ajax({
         url: 'api/Mailers/'+(addr=="cc"?"to":addr),
-        type: 'post',
+        type: 'put',
         scriptCharset: 'utf-8',
         data: { fromAddr: sender, toList: param, subject: subject, mailBody: body },
         dataType: 'json'

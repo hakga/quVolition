@@ -1,4 +1,4 @@
-﻿var GroupList = [
+﻿const GroupList = [
 { "Id": "0", "name": "00シリーズ" },
 { "Id": "1", "name": "ドクター" },
 { "Id": "10", "name": "ヨーロッパ" },
